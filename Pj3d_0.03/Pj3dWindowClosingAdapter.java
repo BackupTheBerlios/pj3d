@@ -11,7 +11,7 @@
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-import java.awt.*;
+
 import java.awt.event.*;
 
 public class Pj3dWindowClosingAdapter extends WindowAdapter

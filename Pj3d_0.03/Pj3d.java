@@ -1,11 +1,11 @@
 import java.applet.*;
 import javax.media.j3d.*;
+import com.sun.j3d.utils.picking.*;
+import com.sun.j3d.utils.geometry.*;
 import javax.vecmath.*;
-
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
-
-//import java.applet.Applet;
+ 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -121,7 +121,6 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    canvas.addKeyListener(this);
 	    canvas.addMouseListener(this);
 	    canvas.addMouseMotionListener(this);
-	    System.out.println(canvas.getBounds());
 	    frame.add( "Center", canvas );
 	    
 	    frame.show( );
@@ -324,7 +323,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	mouseReleased = false;
     	mouseX = m.getX();
     	mouseY = m.getY();
-    	pickObject(mouseX, mouseY);
+    	pickObject(mouseX, mouseY, m);
     	//System.out.println("mousePressed");
     }
     
@@ -378,12 +377,54 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     }
     
     ///
+    /// picks a objekt on the scene. for nicer use: method got the mouseevent
+    /// the method is available for the processing user in the processing syntax
+    ///
+    public void pickObject(int mouseX, int mouseY, MouseEvent e)
+    {
+    	PickCanvas pickCanvas = new PickCanvas(canvas, branch);
+    	pickCanvas.setMode(PickCanvas.BOUNDS);
+    	
+        pickCanvas.setShapeLocation(e);
+        PickResult result = pickCanvas.pickClosest();
+        
+        if (result == null) 
+        {
+            System.out.println("Nothing picked");
+         } 
+         else
+         {
+         	// das is der teil den ich nicht sehr nett finde. hier müssen theoretisch alle 3d typen rein.
+         	// d.h. man muss auch dementsprechend viele if clauses einbauen.
+            Primitive p = (Primitive)result.getNode(PickResult.PRIMITIVE);
+            Shape3D s = (Shape3D)result.getNode(PickResult.SHAPE3D);
+
+            if (p != null) 
+            {
+               System.out.println(p.getClass().getName());
+               System.out.println(p);
+            } 
+            else if (s != null) 
+            {
+                 System.out.println(s.getClass().getName());
+            }
+            else
+            {
+               System.out.println("null");
+            }
+         } 
+    }
+    
+ /*   
+    ///
     /// picks a objekt on the scene
     /// the method is available for the processing user in the processing syntax
     ///
     public void pickObject(int mouseX, int mouseY)
     {
-    	System.out.println("pick!");
+    	
+    	branch.pickClosest()
+    	//System.out.println("pick!");
     	try
 		{                      
 	    	//System.out.println("1");
@@ -408,20 +449,21 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    	//System.out.println("rayVector "+rayVector.toString());
 	    	//System.out.println("7");
 	    	PickRay pickRay = new PickRay(mousePoint,rayVector);
-	    	System.out.println("pickRay: "+pickRay);
+	    	//System.out.println("pickRay: "+pickRay);
 	    	try
 			{
-	    		System.out.println("getLocale: "+getMBLocale().pickClosest(pickRay));
+	    		//System.out.println("getLocale: "+getMBLocale().pickClosest(pickRay));
 	    		SceneGraphPath sceneGraphPath = getMBLocale().pickClosest(pickRay);
-	    		System.out.println("9");
+	    		
 	    		//System.out.println(sceneGraphPath.toString());
-	    		//pickedObject = (BranchGroup)sceneGraphPath.getNode(0);
+	    		pickedObject = (BranchGroup)sceneGraphPath.getNode(0);
+	    		System.out.println("pckedObject: "+pickedObject);
 	    	}
 	    	catch (Exception e) { System.out.println("catch scenegraphpath: "+e); }
 	    	
 	    	objPicked = true;
 	    	
-	    	System.out.println(objPicked);
+	    	System.out.println("objPicked: "+objPicked);
 		}
     	catch (Exception e)
 		{
@@ -430,7 +472,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     		System.out.println("nothing picked!");
     		System.out.println(e);
 		}
-    }
+    }*/
     
     ///
     /// get the picked objekt on the scene
