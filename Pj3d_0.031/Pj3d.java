@@ -16,7 +16,7 @@ import java.util.ArrayList;
 ///
 /// contain all subobjekts that processing needs for later use.
 /// the subobjekts: e.g. PJ3DBox or PJ3DSphere... will be referenced by the first
-/// initialization of PJ3D automaticly.
+/// initialization of PJ3D automaticly.-
 ///
 
 public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMotionListener
