@@ -28,7 +28,7 @@ public class Pj3dColor extends Pj3dToolbox
 	}
 	
 	///
-	/// set the color to the given value
+	/// set the color to the given value!
 	///
 	public void setColor(float r, float g, float b)
 	{
