@@ -78,4 +78,12 @@ public class Pj3dScene
 	{
 		return canvas;
 	}
+	
+	///
+	/// get Methode for branch
+	///
+	public BranchGroup getMasterBranch()
+	{
+		return branch;
+	}
 }
