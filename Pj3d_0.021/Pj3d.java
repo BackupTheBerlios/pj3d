@@ -12,51 +12,50 @@ import java.io.FileInputStream;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+
 ///
-/// Enthält alle Unterobjekte die zum späteren Gebrauch in Processing benötigt werden.
-/// Die Unterobjekte: z.B. PJ3DBox oder  PJ3DSphere... werden bei der ersten 
-/// Initialisierung mit Referenziert. 
+/// contain all subobjekts that processing needs for later use.
+/// the subobjekts: e.g. PJ3DBox or PJ3DSphere... will be referenced by the first
+/// initialization of PJ3D automaticly.test
 ///
 
 public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMotionListener
 {
-	private int mWinHeight, mWinWidth;
+	private int mWinHeight, mWinWidth; 
 	private Pj3dScene mb;
 	private BranchGroup branch;
 	private Canvas3D canvas;
-	private Pj3dToolbox toolbox;	///< private Background bg; ist nun in PJ3DCommands
+	private Pj3dToolbox toolbox;																				// private Background bg; ist nun in PJ3DCommands
 	private float mColorBgWorldR, mColorBgWorldG, mColorBgWorldB;
-	private Vector3f transformVec = new Vector3f(0, 0, 0); ///< em05: wenn der default transform vector erst spaeter definiert wird, wuerde ein setTransform vor der inizialisierung der camera nichts bewirken
-	public final float DEFAULTCOLOR = 0.5f; 	///< Bestimmung der defaultfarbe
-	public int width, height;
-	public Pj3dToolbox ptools = new Pj3dToolbox();
-	public Background bg;	
-	public Color3f backgroundColor, 					///< Hintergrundfarbe der 3D Welt
-	ambientColor, 											///< Beschreibung der Ambientfarbe
-	diffuseColor, 												///< Beschreibung der Diffusefarbe
-	emissiveColor,											///< Beschreibung der Emissivefarbe
-	specularColor, 											///< Beschreibung der Specularfarbe
-	textColor;													///< Beschreibung der Text2Dfarbe
-	public float shininess, 								///< Beschreibung der Shininessfarbe
-	alpha;	
-	public Applet parent;
+	private Vector3f transformVec = new Vector3f(0, 0, 0); 								// em05: wenn der default transform vector erst spaeter definiert wird, wuerde ein setTransform vor der inizialisierung der camera nichts bewirken
+	public final float DEFAULTCOLOR = 0.5f; 														///< appointment of the  default color
+	public int width, height;																						///< width and height of the window. is needed to represent the processing sytax
+	public Pj3dToolbox ptools = new Pj3dToolbox();											///< referenz to the Pj3DToolbox
+	public Background bg;																							///< the backround objekt
+	public Color3f backgroundColor, 																		///< backround of the 3D world
+	ambientColor, 																										///< appointment of the Ambient color
+	diffuseColor, 																										///< appointment of the Diffuse color
+	emissiveColor,																										///< appointment of the Emissive color
+	specularColor, 																										///< appointment of the Specular color
+	textColor;																												///< appointment of the Text2D color
+	public float shininess, 																						///< appointment of the Shininess color
+	alpha;																														///< appointment of the alpha value
+	public Applet parent;																							///< referenz to applet
 	
-	// events
-	public int key;
-	public boolean keyPressed;
-	public boolean keyReleased;
-	public int mouseX;
-	public int mouseY;
-	public boolean mousePressed;
-	public boolean mouseReleased;
+	public int key;																										///< the key code
+	public boolean keyPressed;																				///< is a key pressed?
+	public boolean keyReleased;																				///< is a key released?
+	public int mouseX;																								///< mouse X position
+	public int mouseY;																								///< mouse Y position
+	public boolean mousePressed;																			///< is mouse pressed?
+	public boolean mouseReleased;																		///<  is mouse released?
 	
-	// picking tools
-	public ArrayList pickables = new ArrayList();
-	public BranchGroup pickedObject = null;
-	public boolean objPicked;
+	public ArrayList pickables = new ArrayList();													///< picking stuff: list of pickable objekts
+	public BranchGroup pickedObject = null;														///< picking stuff: picked objekt
+	public boolean objPicked;																					///< picking stuff: is objekt picked?
 	
 	///
-	/// Standart Konstruktor.
+	/// default constructor
 	///
 	public Pj3d(Applet parent)
 	{
@@ -68,7 +67,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	}
 
 	///
-	/// Benötigt als Werte die gewünschte Fenstergrösse.
+	/// overloaded constructor: need the desired values for the window size.
 	///
 	public Pj3d(Applet parent, int windowWidth, int windowHeight)
 	{
@@ -83,7 +82,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	}
 	
 	///
-	/// Initialisierung der äußeren BranchGroup. Der "normale" weg
+	/// initialization of the outer branchGroup. the "normal" way.
 	///
 	public BranchGroup InitPj3d(int mWinWidth, int mWinHeight)
 	{	
@@ -127,7 +126,9 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    return branch;
 	}
 	
-    // create background at setup with default color
+	///
+    /// create background at setup with default color
+	///
     private Background InitBackground()
     {
     	BoundingSphere worldBounds = new BoundingSphere(
@@ -171,63 +172,99 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     {
     	branch.addChild(child);
     }
-    
+
     ///
-    /// commands
+    /// makes a box with the committed x, y, z values
+    /// the method is aviable for the processing user in the processing syntax
     ///
-    
     public Pj3dBox Box(int x, int y, int z)
 	{
 		Pj3dBox b = new Pj3dBox(this, x, y, z);
 		return b;
 	}
-    
+
+    ///
+    /// makes a box with the committed x values
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public Pj3dBox Box(int x)
 	{
 		Pj3dBox b = new Pj3dBox(this, x);
 		return b;
 	}
     
+    ///
+    /// makes a sphere with the committed x values
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public Pj3dSphere Sphere(int x)
 	{
     	Pj3dSphere s = new Pj3dSphere(this, x);
 		return s;
 	}
     
+    ///
+    /// makes a plane with the committed x, z values
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public Pj3dPlane Pj3dPlane(int x, int z)
 	{
     	Pj3dPlane plane = new Pj3dPlane(this, x, z);
 		return plane;
 	}
     
+    ///
+    /// load a 3D objekt with the committed path to the file
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public Pj3dObj Pj3dObj(String file)
 	{
     	Pj3dObj obj = new Pj3dObj(this, file);
 		return obj;
 	}
 	
+    ///
+    /// creates a camera objekt
+    /// the method is aviable for the processing user in the processing syntax
+    ///
 	public Pj3dCamera Camera()
 	{
 		Pj3dCamera cam = new Pj3dCamera(this);
 		return cam;
 	}
-	
+
+    ///
+    /// creates a light objekt
+    /// the method is aviable for the processing user in the processing syntax
+    ///
 	public Pj3dLight Light()
 	{
 		Pj3dLight light = new Pj3dLight(this);
 		return light;
 	}
 	
+    ///
+    ///set the background color wirh the committed values
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void setBackground(int r, int g, int b)
     {
     	bg.setColor(new Color3f(ptools.ColorInt2Float(r), ptools.ColorInt2Float(g), ptools.ColorInt2Float(b)));
     }
-    
+
+    ///
+    ///set the background color wirh the committed values
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void setBackground(int x)
     { 	
     	bg.setColor(ptools.color2Color3f(x));
     }
     
+    ///
+    /// creates a texture in the background
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void setBackground(String texture)
     {
     	FileInputStream inFile = null;
@@ -245,13 +282,16 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
    	    	System.out.println(e + "\n" + "Texture Import failed!");
    	    }
     }
-    
-    
-    // keyboard and mouse events
-    // alle variablen public oder halt get/set
-	
+
+    ///
+    /// not implemented
+    ///
     public void keyTyped (KeyEvent e) { }
 
+    ///
+    /// call PJ3D that a key is pressed 
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void keyPressed (KeyEvent e)
     {
     	keyPressed = true;
@@ -259,6 +299,10 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	key = e.getKeyCode();
     }
 
+    ///
+    /// call PJ3D that a key is released 
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void keyReleased (KeyEvent e)
     {
     	keyPressed = false;
@@ -266,7 +310,10 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	key = 0;
     }
     
-    // mouseListeners
+    ///
+    /// call PJ3D that a the mouse is pressed. calls pickObj(x, y) 
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void mousePressed (MouseEvent m)
     {
     	mousePressed = true;
@@ -276,14 +323,27 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	pickObject(mouseX, mouseY);
     }
     
+    ///
+    /// not implemented
+    ///
     public void mouseExited (MouseEvent m) { }
     
+    ///
+    /// not implemented
+    ///
     public void mouseEntered (MouseEvent m) { }
     
+    ///
+    /// not implemented
+    ///
     public void mouseClicked (MouseEvent m) {
     	//System.out.println("mouseClicked..");	
     }
     
+    ///
+    /// call PJ3D that a the mouse is released and sets the objPicked variable to false
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void mouseReleased (MouseEvent m)
     {
     	mousePressed = false;
@@ -292,19 +352,30 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	//System.out.println("mouseReleased..");
     }
     
-    // mousemotionlistener
+    ///
+    /// set the mouseX and mouseY variable
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void mouseMoved (MouseEvent n)
     {
     	mouseX = n.getX();
     	mouseY = n.getY();
     }
     
+    ///
+    /// set the mouseX and mouseY variable
+    /// the method is aviable for the processing user in the processing syntax
+    /// 
     public void mouseDragged (MouseEvent n)
     {
     	mouseX = n.getX();
     	mouseY = n.getY();
     }
     
+    ///
+    /// picks a objekt on the scene
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public void pickObject(int mouseX, int mouseY)
     {
     	try
@@ -343,6 +414,10 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 		}
     }
     
+    ///
+    /// get the picked objekt on the scene
+    /// the method is aviable for the processing user in the processing syntax
+    ///
     public Pj3dPickable getPickedObj()
     {
     	Pj3dPickable picked = new Pj3dPickable(this, pickedObject);

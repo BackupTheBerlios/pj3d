@@ -4,17 +4,21 @@ import javax.media.j3d.Material;
 import javax.media.j3d.TransparencyAttributes;
 import javax.vecmath.Color3f;
 
+///
+/// the PJ3dColor objekt got just one methode for 
+/// converting the given int values to floats
+///
 public class Pj3dColor extends Pj3dToolbox
 {
-	public Color3f color2D = new Color3f();
+	public Color3f color2D = new Color3f();	///< color 2d objekt
 	
 	///
-	/// default konstruktor
+	/// default constructor
 	///
 	public Pj3dColor() {}
 	
 	///
-	/// set methode fuer text2D
+	/// set the color to the given value
 	///
 	public void setColor(int r, int g, int b)
 	{

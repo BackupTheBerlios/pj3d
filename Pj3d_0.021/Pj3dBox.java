@@ -4,17 +4,21 @@ import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Box;
 import java.util.ArrayList;
 
+///
+///  creates a box primitve
+///
+
 public class Pj3dBox extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
+	public Pj3dTransform transform;									///< referenz to the PJ3dTransform objekt
+	public Pj3dShader shader;												///< referenz to the PJ3dShader objekt
 	
 	///
-	/// konstruktor 1: setzt das objekt auf den "null" punkt
+	/// set the Box to the "zero" point of the world
 	///
 	public Pj3dBox(Pj3d parent, int x)
 	{
@@ -26,7 +30,7 @@ public class Pj3dBox extends Pj3dToolbox
 	}
 
 	///
-	/// konstruktor : setzt das objekt auf die gegebenen koordinatent
+	/// set the Box to the given coordinades
 	///	
 	public Pj3dBox(Pj3d parent, int x, int y, int z)
 	{
@@ -38,7 +42,10 @@ public class Pj3dBox extends Pj3dToolbox
 		this.zdim = Int2Float(z);
 		this.InitPrimitive(xdim, ydim, zdim);
 	}
-	
+
+	///
+	/// init the primitive
+	///	
 	private void InitPrimitive(float xdim, float ydim, float zdim)
 	{
 		primitiveBranch = new BranchGroup();
