@@ -5,18 +5,21 @@ import com.sun.j3d.loaders.*;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.geometry.Box;
 
+///
+/// class for loading a 3d object in the world
+///
 public class Pj3dObj extends Pj3dToolbox 
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
-	public String file;
+	public Pj3dTransform transform;								///< instance to the transform object
+	public Pj3dShader shader;											///< instance to the shader object
+	public String file;															///< file is public??
 	
 	///
-	/// konstruktor 1: setzt das objekt auf den "null" punkt
+	/// constructor: set the object to the "null" point of the world
 	///
 	public Pj3dObj(Pj3d parent, String fileLocation)
 	{
@@ -27,7 +30,9 @@ public class Pj3dObj extends Pj3dToolbox
 		this.InitPrimitive(file);
 	}
 	
-	
+	///
+	/// init the 3d object to the world
+	///
 	public void InitPrimitive(String file)
 	{
 		Scene s = null;

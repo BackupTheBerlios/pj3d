@@ -3,17 +3,20 @@ import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Box;
 
+///
+/// draws a plane 
+///
 public class Pj3dPlane extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
+	public Pj3dTransform transform;								///< reference to the transform object
+	public Pj3dShader shader;											///< reference to the shader object
 
 	///
-	/// konstruktor : setzt das objekt auf die gegebenen koordinatent
+	/// constructor, need the size of the plane as integers
 	///	
 	public Pj3dPlane(Pj3d parent, int x, int z)
 	{
@@ -27,6 +30,24 @@ public class Pj3dPlane extends Pj3dToolbox
 		this.InitPrimitive(xdim, ydim, zdim);
 	}
 	
+	///
+	/// constructor, need the size of the plane as floats
+	///	
+	public Pj3dPlane(Pj3d parent, float x, float z)
+	{
+		this.parent = parent;
+		this.transform = new Pj3dTransform();
+		this.shader = new Pj3dShader(parent);
+		this.xdim = x;
+		// fake, damit ich keine plane selbst schreiben muss..
+		this.ydim = 0.0001f;
+		this.zdim = z;
+		this.InitPrimitive(xdim, ydim, zdim);
+	}
+	
+	///
+	/// init the plane
+	///
 	private void InitPrimitive(float xdim, float ydim, float zdim)
 	{
 		primitiveBranch = new BranchGroup();

@@ -11,6 +11,9 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
+///
+/// creates a light object
+///
 public class Pj3dLight
 {
 	private Color3f lightColor;
@@ -22,7 +25,7 @@ public class Pj3dLight
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	
 	///
-	/// Default Konstruktor
+	/// default constructor
 	///
 	public Pj3dLight(Pj3d parent)
 	{
@@ -30,7 +33,7 @@ public class Pj3dLight
 		InitLightDefault(defaultColor);
 	}
 	///
-	/// Konstruktor fuer RGB
+	/// constructor for RGB
 	///
 	public Pj3dLight(Pj3d parent, int r, int g, int b)
 	{
@@ -39,7 +42,7 @@ public class Pj3dLight
 		InitLightDefault(thisColor);
 	}
 	///
-	/// Konstruktor fuer Processing color int
+	/// constructor for RGB
 	///
 	public Pj3dLight(Pj3d parent, int color)
 	{
@@ -49,7 +52,7 @@ public class Pj3dLight
 	}
 	
 	///
-	/// Initialisierung des Lichtes
+	/// initialisation of the light
 	///
 	private void InitLightDefault(Color3f lightcolor)
 	{	
@@ -92,6 +95,14 @@ public class Pj3dLight
 	public void setDirection(float x, float y, float z)
 	{
 		directionalLight.setDirection(new Vector3f(x, y, z));
+	}
+	
+	///
+	/// set the directional vector for the light
+	///
+	public void setDirection(int x, int y, int z)
+	{
+		directionalLight.setDirection(new Vector3f(ptools.Int2Float(x), ptools.Int2Float(y), ptools.Int2Float(z)));
 	}
 	
 	/*

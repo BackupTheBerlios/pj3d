@@ -3,17 +3,20 @@ import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
 
+///
+/// creates a sphere primitive
+///
 public class Pj3dSphere extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
+	public Pj3dTransform transform;								///< reference to the transform object
+	public Pj3dShader shader;											///< reference to the shader object
 	
 	///
-	/// konstruktor 1: setzt das objekt auf den "null" punkt
+	/// constructor: set the object to the "null" point of the world
 	///
 	public Pj3dSphere(Pj3d parent, int x)
 	{
@@ -25,7 +28,7 @@ public class Pj3dSphere extends Pj3dToolbox
 	}
 
 	///
-	/// konstruktor : setzt das objekt auf die gegebenen koordinatent
+	/// constructor: set the object to the given values 
 	///	
 	public Pj3dSphere(Pj3d parent, int x, int y, int z)
 	{
@@ -36,6 +39,9 @@ public class Pj3dSphere extends Pj3dToolbox
 		this.InitPrimitive(xdim);
 	}
 	
+	///
+	/// init the primitive
+	///
 	private void InitPrimitive(float xdim)
 	{
 		primitiveBranch = new BranchGroup();

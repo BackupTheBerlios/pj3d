@@ -26,4 +26,14 @@ public class Pj3dColor extends Pj3dToolbox
 		color2D.y = Int2Float(g);
 		color2D.z = Int2Float(b);
 	}
+	
+	///
+	/// set the color to the given value
+	///
+	public void setColor(float r, float g, float b)
+	{
+		color2D.x = r;
+		color2D.y = g;
+		color2D.z = b;
+	}
 }

@@ -5,17 +5,20 @@ import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Text2D;
 import java.awt.Font;
 
+///
+/// class for 3d text in pj3d
+///
 public class Pj3dText3D extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
+	public Pj3dTransform transform;								///< reference to the transform object
+	public Pj3dShader shader;											///< reference to the shader object
 	
 	///
-	/// konstruktor 1: setzt das objekt auf den "null" punkt
+	/// constructor: set the object to the "null" point of the world
 	///
 	public Pj3dText3D(Pj3d parent, String text, String font)
 	{
@@ -25,6 +28,9 @@ public class Pj3dText3D extends Pj3dToolbox
 		this.InitPrimitive(text, font);
 	}
 	
+	///
+	/// init the primitive
+	///
 	private void InitPrimitive(String text, String font)
 	{
 		primitiveBranch = new BranchGroup();

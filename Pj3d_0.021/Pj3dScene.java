@@ -4,7 +4,7 @@ import javax.vecmath.*;
 import java.awt.*;
 
 ///
-/// in diesen Mainbranch werden aller erzeugten Objekte hinzugefügt.
+/// all created objects goes in this mainbranch
 ///
 public class Pj3dScene
 {
@@ -13,16 +13,16 @@ public class Pj3dScene
 	private Locale		locale;
 	private Applet parent;
 	private Canvas3D canvas;
-	public BranchGroup branch = new BranchGroup();
-	public Background 	background;
+	public BranchGroup branch = new BranchGroup();	///< the masterbranch
+	public Background 	background;									///< the backroound object
 
 	///
-	/// Default Konstruktor
+	/// default constructor
 	///
 	public Pj3dScene(){}
 
 	///
-	/// Konstruktor: benötigt einen erzeugten Frame
+	/// constructor: needs a frame
 	///
 	public Pj3dScene (Frame f)
 	{
@@ -30,7 +30,7 @@ public class Pj3dScene
 	}
 	
 	///
-	/// Konstruktor: benötigt einen erzeugten Frame und ein Color3f Objekt fuer die Hintergrundfarbe
+	/// constructor: need a created frame and a color3f object for the bg color
 	///
 	public Pj3dScene (Frame f, GraphicsConfiguration gc, Background bg)
 	{
@@ -41,8 +41,7 @@ public class Pj3dScene
 	}
 	
 	///
-	/// Initialisierung des Hauptbranches: position und Groesse des branches werden mit default  Werten gesetzt.
-	/// Evtl. set Methoden?
+	/// initialisation of the mainbranch: position and size are default values, yet. maybe need a bunch of geter and seter methods
 	///
 	public BranchGroup InitBranch()
 	{
@@ -65,7 +64,7 @@ public class Pj3dScene
 	}
 	
 	///
-	/// get Methode fuer Locale
+	/// get Methode for Locale
 	///
 	public Locale getLocale()
 	{
@@ -73,7 +72,7 @@ public class Pj3dScene
 	}
 	
 	///
-	/// get Methode fuer Canvas3D
+	/// get Methode for Canvas3D
 	///
 	public Canvas3D getMBCanvas3D()
 	{

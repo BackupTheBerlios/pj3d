@@ -1,5 +1,8 @@
 import javax.vecmath.Color3f;
 
+///
+/// the toolbox class... no comments added yet
+///
 public class Pj3dToolbox 
 {
 	public int ColorFloat2Int(float fVal)

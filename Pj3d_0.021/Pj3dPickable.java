@@ -2,19 +2,22 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.Primitive;
 
+///
+/// the "wich object is picked" class
+///
 public class Pj3dPickable extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
+	public Pj3dTransform transform;									///< reference to the transform object
+	public Pj3dShader shader;												///< reference to the shader object
 	
 	// hier wird die aus dem picking resultierende branchgroup in ein Pj3d kompatibles objekt konvertiert
 	
 	///
-	/// konstruktor 1: setzt das objekt auf den "null" punkt
+	/// constructor
 	///
 	public Pj3dPickable(Pj3d parent, BranchGroup pickedBranch)
 	{
@@ -25,6 +28,9 @@ public class Pj3dPickable extends Pj3dToolbox
 		this.ParsePrimitive();
 	}
 	
+	///
+	/// parsing of the actuall primitives
+	///
 	private void ParsePrimitive()
 	{	
 		transform.transformgroup = (TransformGroup)primitiveBranch.getChild(0);

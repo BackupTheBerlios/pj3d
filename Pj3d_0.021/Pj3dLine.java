@@ -3,21 +3,23 @@ import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Box;
 import java.util.ArrayList;
-
+///
+/// the line drawing class
+///
 public class Pj3dLine extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform;
-	public Pj3dShader shader;
 	private LineArray la;
 	private Shape3D pointShape;
 	private Point3f[] pts;
+	public Pj3dTransform transform;									///< instance to the transform object
+	public Pj3dShader shader;												///< instance to the shader object
 
 	///
-	/// konstruktor : setzt das objekt auf die gegebenen koordinatent
+	/// default constructor
 	///	
 	public Pj3dLine(Pj3d parent, float [] points)
 	{

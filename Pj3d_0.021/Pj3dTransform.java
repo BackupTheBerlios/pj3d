@@ -2,20 +2,23 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.*;
 
+///
+/// class for the movement and resizing of the aviable objets in the mainbranch
+///
 public class Pj3dTransform {
 
-	public TransformGroup transformgroup;
-	public Transform3D transform3D;
-	public Vector3f transformVector;
+	public TransformGroup transformgroup;						///< reference to the transform object
+	public Transform3D transform3D;									///< reference to the transform3d object
+	public Vector3f transformVector;									///< the transformvector
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	
 	///
-	/// default konstruktor
+	/// default constructor
 	///
 	public Pj3dTransform() {}
 
 	///
-	/// sichtbare methode in p5 um ein objekt zu manipulieren: translateObj o. translate
+	/// the visible translate object. this is visible for the processing users
 	///
 	public void translate(int x, int y, int z)
    	{	
@@ -27,7 +30,24 @@ public class Pj3dTransform {
 		transform3D.setTranslation(transformVector);
 		transformgroup.setTransform(transform3D);
    	}
+
+	///
+	/// the visible translate object. this is visible for the processing users
+	///
+	public void translate(float x, float y, float z)
+   	{	
+		transformVector.x += x;
+		transformVector.y += y;
+		transformVector.z += z;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
 	
+	///
+	/// manipulates the x axis need a integer
+	///
 	public void translateX(int x)
    	{	
 		transformVector.x += ptools.Int2Float(x);
@@ -37,6 +57,21 @@ public class Pj3dTransform {
 		transformgroup.setTransform(transform3D);
    	}
 	
+	///
+	/// manipulates the x axis need a float
+	///
+	public void translateX(float x)
+   	{	
+		transformVector.x += x;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
+	
+	///
+	/// manipulates the y axis need a integer
+	///
 	public void translateY(int y)
    	{	
 		transformVector.y += ptools.Int2Float(y);
@@ -46,6 +81,21 @@ public class Pj3dTransform {
 		transformgroup.setTransform(transform3D);
    	}
 	
+	///
+	/// manipulates the y axis need a floaf
+	///
+	public void translateY(float y)
+   	{	
+		transformVector.y += y;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
+	
+	///
+	/// manipulates the z axis need a integer
+	///
 	public void translateZ(int z)
    	{	
 		transformVector.z += ptools.Int2Float(z);
@@ -56,7 +106,19 @@ public class Pj3dTransform {
    	}
 	
 	///
-	/// sichtbare methode in p5 um ein objekt zu manipulieren: translateObj o. position
+	/// manipulates the z axis need a float
+	///
+	public void translateZ(float z)
+   	{	
+		transformVector.z += z;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
+	
+	/// 
+	/// visible methode in p5 to manipulate a object: like translateObj	to.position. need integer
 	///
 	public void setPosition(int x, int y, int z)
    	{	
@@ -69,6 +131,23 @@ public class Pj3dTransform {
 		transformgroup.setTransform(transform3D);
    	}
 	
+	/// 
+	/// visible methode in p5 to manipulate a object: like translateObj	to.position. need float
+	///
+	public void setPosition(float x, float y, float z)
+   	{	
+		transformVector.x = x;
+		transformVector.y = y;
+		transformVector.z = x;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
+	
+	///
+	/// set the x position of the object. need integer
+	///
 	public void setPositionX(int x)
    	{	
 		transformVector.x = ptools.Int2Float(x);
@@ -78,6 +157,21 @@ public class Pj3dTransform {
 		transformgroup.setTransform(transform3D);
    	}
 	
+	///
+	/// set the x position of the object. need float
+	///
+	public void setPositionX(float x)
+   	{	
+		transformVector.x = x;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
+	
+	///
+	/// set the y position of the object. need integer
+	///
 	public void setPositionY(int y)
    	{	
 		transformVector.y = ptools.Int2Float(y);
@@ -87,6 +181,21 @@ public class Pj3dTransform {
 		transformgroup.setTransform(transform3D);
    	}
 	
+	///
+	/// set the y position of the object. need float
+	///
+	public void setPositionY(float y)
+   	{	
+		transformVector.y = y;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
+   	}
+
+	///
+	/// set the z position of the object. need integer
+	///
 	public void setPositionZ(int z)
    	{	
 		transformVector.z = ptools.Int2Float(z);
@@ -96,22 +205,40 @@ public class Pj3dTransform {
 		transformgroup.setTransform(transform3D);
    	}
 	
-	public int getPositionX()
+	///
+	/// set the z position of the object. need float
+	///
+	public void setPositionZ(float z)
    	{	
-		int x = ptools.Float2Int(transformVector.x);
-		return x;
+		transformVector.z = z;
+		
+		// in Transform3D schreiben
+		transform3D.setTranslation(transformVector);
+		transformgroup.setTransform(transform3D);
    	}
 	
-	public int getPositionY()
+	///
+	/// returns the x position of the object
+	///
+	public float getPositionX()
    	{	
-		int y = ptools.Float2Int(transformVector.y);
-		return y;
+		return transformVector.x;
+   	}
+
+	///
+	/// returns the y position of the object
+	///
+	public float getPositionY()
+   	{	
+		return transformVector.y;
    	}
 	
-	public int getPositionZ()
+	///
+	/// returns the z position of the object
+	///
+	public float getPositionZ()
    	{	
-		int z = ptools.Float2Int(transformVector.z);
-		return z;
+		return transformVector.z;
    	}
 	
 	///

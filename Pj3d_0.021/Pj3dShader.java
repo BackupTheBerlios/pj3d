@@ -13,7 +13,7 @@ import java.applet.*;
 import java.awt.Toolkit;
 
 ///
-/// PmColor3D: die get methoden sind vorerst private
+/// PmColor3D: the geter methods are private for the time being
 ///
 public class Pj3dShader extends Pj3dToolbox
 {
@@ -31,13 +31,16 @@ public class Pj3dShader extends Pj3dToolbox
 	public Appearance appearance;
 	
 	///
-	/// default konstruktor
+	/// default constructor
 	///
 	public Pj3dShader(Applet parentApplet)
 	{
 		this.parent = parentApplet;
 	}
 	
+	///
+	/// crates a appearance
+	///
 	public Appearance CreateAppearance(Color3f ambientColor, Color3f diffuseColor, Color3f emissiveColor, Color3f specularColor, float shininess, float alpha)
 	{		
 		//this is an easy way to convert a jpg file to the texture object we need.
@@ -81,7 +84,7 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// get methode fuer background
+	/// get methode for background
 	///
 	private Color3f getBackground()
 	{
@@ -89,13 +92,23 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer background
+	/// set methode for background need integer
 	///
 	public void setBackground(int r, int g, int b)
 	{
 		background.x = Int2Float(r);
 		background.y = Int2Float(g);
 		background.z = Int2Float(b);
+	}
+	
+	///
+	/// set methode for background need float
+	///
+	public void setBackground(float r, float g, float b)
+	{
+		background.x = r;
+		background.y = g;
+		background.z = b;
 	}
 	
 	///
@@ -131,13 +144,25 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer Ambient als int r, g, b
+	/// set methode for Ambient as int r, g, b
 	///
 	public void setAmbient(int r, int g, int b)
 	{
 		ambient.x = Int2Float(r);
 		ambient.y = Int2Float(g);
 		ambient.z = Int2Float(b);
+		
+		appearance.getMaterial().setAmbientColor(new Color3f(ambient.x, ambient.y, ambient.z));
+	}
+	
+	///
+	/// set methode for Ambient as int r, g, b
+	///
+	public void setAmbient(float r, float g, float b)
+	{
+		ambient.x = r;
+		ambient.y = g;
+		ambient.z = b;
 		
 		appearance.getMaterial().setAmbientColor(new Color3f(ambient.x, ambient.y, ambient.z));
 	}
@@ -185,7 +210,7 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer Diffuse als int r, g, b
+	/// set methode for Diffuse as int r, g, b
 	///
 	public void setDiffuse(int r, int g, int b)
 	{
@@ -197,7 +222,19 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer Diffuse als processing color (int)
+	/// set methode for Diffuse as float r, g, b
+	///
+	public void setDiffuse(float r, float g, float b)
+	{
+		diffuse.x = r;
+		diffuse.y = g;
+		diffuse.z = b;
+		
+		appearance.getMaterial().setDiffuseColor(new Color3f(diffuse.x, diffuse.y, diffuse.z));
+	}
+	
+	///
+	/// set methode for Diffuse as processing color (int)
 	///
 	public void setDiffuse(int color)
 	{
@@ -239,13 +276,25 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer emissive als int r, g, b
+	/// set methode for emissive as int r, g, b
 	///
 	public void setEmissive(int r, int g, int b)
 	{
 		emissive.x = Int2Float(r);
 		emissive.y = Int2Float(g);
 		emissive.z = Int2Float(b);
+		
+		appearance.getMaterial().setEmissiveColor(new Color3f(emissive.x, emissive.y, emissive.z));
+	}
+	
+	///
+	/// set methode for emissive as float r, g, b
+	///
+	public void setEmissive(float r, float g, float b)
+	{
+		emissive.x = r;
+		emissive.y = g;
+		emissive.z = b;
 		
 		appearance.getMaterial().setEmissiveColor(new Color3f(emissive.x, emissive.y, emissive.z));
 	}
@@ -293,13 +342,25 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer emissive als int r, g, b
+	/// set methode for emissive as int r, g, b
 	///
 	public void setSpecular(int r, int g, int b)
 	{
 		specular.x = Int2Float(r);
 		specular.y = Int2Float(g);
 		specular.z = Int2Float(b);
+		
+		appearance.getMaterial().setSpecularColor(new Color3f(specular.x, specular.y, specular.z));
+	}
+	
+	///
+	/// set methode for emissive as float r, g, b
+	///
+	public void setSpecular(float r, float g, float b)
+	{
+		specular.x = r;
+		specular.y = g;
+		specular.z = b;
 		
 		appearance.getMaterial().setSpecularColor(new Color3f(specular.x, specular.y, specular.z));
 	}
@@ -323,13 +384,25 @@ public class Pj3dShader extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer text3D als int r, g, b
+	/// set methode for text3D as int r, g, b
 	///
 	public void setText3D(int r, int g, int b)
 	{
 		text3D.x = Int2Float(r);
 		text3D.y = Int2Float(g);
 		text3D.z = Int2Float(b);
+		
+		appearance.getMaterial().setSpecularColor(new Color3f(text3D.x, text3D.y, text3D.z));
+	}
+
+	///
+	/// set methode for text3D as float r, g, b
+	///
+	public void setText3D(float r, float g, float b)
+	{
+		text3D.x = r;
+		text3D.y = g;
+		text3D.z = b;
 		
 		appearance.getMaterial().setSpecularColor(new Color3f(text3D.x, text3D.y, text3D.z));
 	}
