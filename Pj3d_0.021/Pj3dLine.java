@@ -70,7 +70,9 @@ public class Pj3dLine extends Pj3dToolbox
 		primitiveBranch.addChild(transform.transformgroup);
 		parent.AddModel(primitiveBranch);
 	}
-	
+	///
+	/// add a point
+	///
 	public void addPoint(float [] points)
 	{	
 		int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
