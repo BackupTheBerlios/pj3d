@@ -2,18 +2,22 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Box;
-import java.util.ArrayList;
-
+//import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
+//import com.sun.j3d.utils.behaviors.*;
+import com.sun.j3d.utils.behaviors.picking.*;
 ///
 ///  creates a box primitve
 ///
-
+//PickingCallback myCallback = new MyCallbackClass();
+// Register the class callback to be called
+//pickt.setupCallback(myCallback);
 public class Pj3dBox extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
+	private PickingCallback	pickingcallback = new Pj3dPickableCallback();
 	public Pj3dTransform transform;									///< referenz to the PJ3dTransform objekt
 	public Pj3dShader shader;												///< referenz to the PJ3dShader objekt
 	
@@ -79,6 +83,7 @@ public class Pj3dBox extends Pj3dToolbox
 		primitiveBranch.setCapability(BranchGroup.ENABLE_PICK_REPORTING);
 		primitiveBranch.setCapability(BranchGroup.ALLOW_DETACH);
 		primitiveBranch.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
+		primitiveBranch.setCapability(BranchGroup.ALLOW_PICKABLE_READ);
 		transform.transform3D = new Transform3D();
 		transform.transformVector = new Vector3f(0f, 0f, 0f);
 		transform.transform3D.set(transform.transformVector);
@@ -94,6 +99,20 @@ public class Pj3dBox extends Pj3dToolbox
 		box.setCapability(Box.ALLOW_CHILDREN_READ);
 		box.getShape(0).setCapability(Shape3D.ALLOW_GEOMETRY_READ);
 		box.getShape(0).setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		
+		// picking und pickable callback test
+		//-------------------------------------------------------------------------
+		/*BoundingBox boundBox = new BoundingBox(new Point3d(-2000, -2000, 0), new Point3d(2000, 2000, 0));
+		MouseRotate behavior = new MouseRotate(transform.transformgroup);
+		behavior.setSchedulingBounds(boundBox);
+		transform. transformgroup.addChild(behavior);*/
+		
+		BoundingSphere behaveBounds = new BoundingSphere();
+        PickTranslateBehavior pickt = new PickTranslateBehavior(primitiveBranch, parent.getMBCanvas(), behaveBounds);
+        transform. transformgroup.addChild(pickt);
+        pickt.setupCallback(pickingcallback);
+		
+		//-------------------------------------------------------------------------
 		
 		transform.transformgroup.addChild( box );
 		primitiveBranch.addChild(transform.transformgroup);

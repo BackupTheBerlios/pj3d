@@ -67,7 +67,7 @@ public class Pj3dLauncher extends Applet
 		b.shader.setEmissive(100, 100, 0);
 		*/
 		
-		for (int i=0; i<5; i++)
+		for (int i=0; i<1; i++)
 		{
 			Pj3dBox box = new Pj3dBox(p, 20);
 			//Pj3dSphere box = new Pj3dSphere(p, 20);

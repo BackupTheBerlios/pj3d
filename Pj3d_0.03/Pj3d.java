@@ -401,7 +401,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
             parent.getLocale();
             if (p != null) 
             {
-               System.out.println("result: "+result.getGeometryArray().getInitialNormalIndex());
+              // System.out.println("result: "+result.getGeometryArray().getInitialNormalIndex());
                System.out.println(p.getClass().getName());
             } 
             else if (s != null) 
