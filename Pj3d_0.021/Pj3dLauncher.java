@@ -22,13 +22,45 @@ public class Pj3dLauncher extends Applet
 		// more attributes
 		light.setDirection(x, y, z);
 		*/
-
+		
+		int lines = 30;
+		float lastX = 0;
+		float lastY = 0;
+		float lastZ = 0;
+		//float[] points = new float[lines*3];
+		
+		/*
+		for (int i=0; i<lines/2; i++)
+		{
+			float lineX = (float)Math.random()*100;
+			float lineY = (float)Math.random()*100;
+			float lineZ = (float)Math.random()*100;
+			
+		}
+		*/
+		float[] points = {0,0,0, 20,0,10};
+		Pj3dLine l = new Pj3dLine(p, points);
+		l.transform.translate(0,0,-100);
+		
+		float newPoint[] = {20,20,0};
+		l.addPoint(newPoint);
+		
+		for (int i=0; i<20; i++)
+		{
+			newPoint[0] = (float)Math.random()*50f;
+			newPoint[1] = (float)Math.random()*50f;
+			newPoint[2] = (float)Math.random()*50f;
+			l.addPoint(newPoint);
+		}
+			
+			
 		// create a box - position, rotation and standard color (grey)
 		// you have to reference the Pj3d object (here: p) for all primitives
 		//Pj3dBox b = new Pj3dBox(p, 100);
 		//b.transform.position(0, -100, -820);
 		//b.transform.rotate(0, -0.8, 0);
 		
+		/*
 		for (int i=0; i<7; i++)
 		{
 			int height = (int)((Math.random()*10));
@@ -45,6 +77,7 @@ public class Pj3dLauncher extends Applet
 			b.shader.setTexture("luzi_in_snow.jpg");
 		}
 		
+		*/
 		/*
 		// more attributes
 		b.transform.translate(0, 0, 10);
