@@ -10,9 +10,11 @@ import java.awt.event.*;
 /// Die Unterobjekte: z.B. PJ3DBox oder  PJ3DSphere... werden bei der ersten 
 /// Initialisierung mit Referenziert. 
 ///
-public class PJ3D extends Applet
+public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMotionListener
 {
-	private int mWinHeight, mWinWidth; 
+	private int mWinHeight, mWinWidth;
+	public int mouseX, mouseY, key;							// public mouse and key values for processing
+	public boolean mousePressed, keyPressed, mouseReleased, keyReleased;	// boolean mouse and keyboard states
 	private MainBranch 	mb;
 	private BranchGroup 	branch;
 	private float mColorBgWorldR, mColorBgWorldG, mColorBgWorldB;
@@ -88,6 +90,12 @@ public class PJ3D extends Applet
 	    
 	    mb = new MainBranch(f, backgroundColor);
 	    branch = mb.InitBranch();
+	    
+	    // get the canvas3d to add the mouse and keylisteners
+	    Canvas3D mbCanvas = mb.getCanvas3D();
+	    mbCanvas.addKeyListener(this);
+	    mbCanvas.addMouseListener(this);
+	    mbCanvas.addMouseMotionListener(this);
 	    
 	    // default transform vector
 	    //transformVec = DEFAULTVECTOR;
@@ -263,4 +271,67 @@ public class PJ3D extends Applet
 		transformVec.y = y;
 		transformVec.z = z;
 	}
+	
+
+	// keyboardlisteners
+	
+	public void keyTyped (KeyEvent e) { }
+
+    public void keyPressed (KeyEvent e)
+    {
+    	keyPressed = true;
+    	keyReleased = false;
+    	key = e.getKeyCode();
+    }
+
+    public void keyReleased (KeyEvent e)
+    {
+    	keyPressed = false;
+    	keyReleased = true;
+    	key = 0;
+    }
+    
+    // mouseListeners
+    public void mousePressed (MouseEvent m)
+    {
+    	mousePressed = true;
+    	mouseReleased = false;
+    	mouseX = m.getX();
+    	mouseY = m.getY();
+    }
+    
+    public void mouseExited (MouseEvent m) { }
+    
+    public void mouseEntered (MouseEvent m) { }
+    
+    public void mouseClicked (MouseEvent m) { }
+    
+    public void mouseReleased (MouseEvent m)
+    {
+    	mousePressed = false;
+    	mouseReleased = true;
+    }
+    
+    // mousemotionlistener
+    public void mouseMoved (MouseEvent n)
+    {
+    	mouseX = n.getX();
+    	mouseY = n.getY();
+    }
+    
+    public void mouseDragged (MouseEvent n)
+    {
+    	/*
+    	mouseX = n.getX();
+    	mouseY = n.getY();
+    	if (mouseY-mouseYpast < 10 && mouseX-mouseXpast < 10)
+    	{
+    		cam.moveCam(0.0f, 0.0f, mouseY-mouseYpast);
+    		cam.rotateCam(0.0f, -(mouseX-mouseXpast)/100f, 0.0f);
+    	}
+    	mouseXpast = n.getX();
+		mouseYpast = n.getY();
+		System.out.println(mouseY+" "+mouseYpast);
+		*/
+    }
 }

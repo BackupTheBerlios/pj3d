@@ -22,7 +22,7 @@ public class PJ3DTransform {
 	*/
 	}
 	
-	public void MoveObj(float x, float y, float z)
+	public void translate(float x, float y, float z) // translateObj o. translate
    	{	
 		tVec3f.x += x;
 		tVec3f.y += y;
@@ -33,7 +33,7 @@ public class PJ3DTransform {
 		tg.setTransform(t3d);
    	}
 	
-	public void SetObj(float x, float y, float z)
+	public void set(float x, float y, float z) // setObj o. set
    	{	
 		tVec3f.x += x;
 		tVec3f.y += y;
@@ -44,7 +44,7 @@ public class PJ3DTransform {
 		tg.setTransform(t3d);
    	}
 	
-	public void RotateObj(double x, double y, double z)
+	public void rotate(double x, double y, double z) // rotateObj o. rotate
 	{
 		Transform3D newTransX = new Transform3D();
 		Transform3D newTransY = new Transform3D();
@@ -58,6 +58,12 @@ public class PJ3DTransform {
 		t3d.mul(newTransY);
 		t3d.mul(newTransZ);
 
+		tg.setTransform(t3d);
+	}
+	
+	public void scale(double s)
+	{
+		t3d.setScale(s);
 		tg.setTransform(t3d);
 	}
 	
