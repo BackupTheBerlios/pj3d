@@ -88,13 +88,12 @@ public class Pj3dBox extends Pj3dToolbox
 		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_READ );
 		
 		shader.appearance = shader.CreateAppearance(parent.ambientColor, parent.diffuseColor, parent.emissiveColor, parent.specularColor, parent.shininess, parent.alpha);
-		//Box box = new Box(xdim, ydim, zdim, shader.appearance);
+
 		int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS; 
 		Box box = new Box(xdim, ydim, zdim, primflags, shader.appearance);
 		box.setCapability(Box.ALLOW_CHILDREN_READ);
 		box.getShape(0).setCapability(Shape3D.ALLOW_GEOMETRY_READ);
 		box.getShape(0).setCapability(Shape3D.ALLOW_APPEARANCE_READ);
-		//box.setCapability(Box.);
 		
 		transform.transformgroup.addChild( box );
 		primitiveBranch.addChild(transform.transformgroup);

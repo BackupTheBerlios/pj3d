@@ -382,7 +382,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     ///
     public void pickObject(int mouseX, int mouseY, MouseEvent e)
     {
-    	PickCanvas pickCanvas = new PickCanvas(canvas, branch);
+    	PickCanvas pickCanvas = new PickCanvas(canvas, getMBLocale());
     	pickCanvas.setMode(PickCanvas.BOUNDS);
     	
         pickCanvas.setShapeLocation(e);
@@ -398,11 +398,11 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
          	// d.h. man muss auch dementsprechend viele if clauses einbauen.
             Primitive p = (Primitive)result.getNode(PickResult.PRIMITIVE);
             Shape3D s = (Shape3D)result.getNode(PickResult.SHAPE3D);
-
+            parent.getLocale();
             if (p != null) 
             {
+               System.out.println("result: "+result.getGeometryArray().getInitialNormalIndex());
                System.out.println(p.getClass().getName());
-               System.out.println(p);
             } 
             else if (s != null) 
             {
