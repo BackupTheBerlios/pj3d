@@ -2,9 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/usr/lib/j2sdk1.4.2_03/lib/j3daudio.jar"/>
-	<classpathentry kind="lib" path="/usr/lib/j2sdk1.4.2_03/lib/j3dcore.jar"/>
-	<classpathentry kind="lib" path="/usr/lib/j2sdk1.4.2_03/lib/j3dutils.jar"/>
-	<classpathentry kind="lib" path="/usr/lib/j2sdk1.4.2_03/lib/vecmath.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

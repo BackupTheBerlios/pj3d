@@ -2,7 +2,7 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 
 ///
-/// Enthält aller nötigen Methoden um eine Kamera zu erzeugen und zu bewegen
+/// Enthält alle nötigen Methoden um eine Kamera zu erzeugen und zu bewegen
 ///
 public class PJ3DCamera 
 {
@@ -45,7 +45,8 @@ public class PJ3DCamera
 
 		view = new View();
 		view.addCanvas3D(canvas);
-	    view.setBackClipDistance(1000);
+		view.setFrontClipDistance(0.01);
+	    view.setBackClipDistance(10000);
 	    view.setFieldOfView(1.5);
 	    view.startView();
 	    view.setPhysicalBody(body);
@@ -83,7 +84,8 @@ public class PJ3DCamera
 	///
 	/// Positionierung der Kamera
 	///
-    public void setCamerapos(float x, float y, float z)
+	// em05: S gross wie ueberall und pos entfernt
+    public void setCamera(float x, float y, float z)
     {
 	    // neuen Vector3f mit xyz position erstellen
     	mCamVec.x = x;
@@ -98,7 +100,7 @@ public class PJ3DCamera
 	///
 	/// Rotiert die Kamera
 	///
-    public void RotateCamera(double x, double y, double z)
+    public void rotateCamera(double x, double y, double z)
     {
 	    Transform3D newTransX = new Transform3D();
 	    Transform3D newTransY = new Transform3D();
@@ -113,5 +115,13 @@ public class PJ3DCamera
 	    camTrans.mul(newTransZ);
 
 	    camGroup.setTransform(camTrans);
+    }
+    
+    ///
+	/// Setzt FOV
+	///
+    public void fovCamera(float fov)
+    {
+    	view.setFieldOfView(fov);
     }
 }

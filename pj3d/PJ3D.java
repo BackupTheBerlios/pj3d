@@ -3,12 +3,7 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 
 import java.awt.*;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.*;
-import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
-import com.sun.j3d.utils.universe.*;
-import com.sun.j3d.utils.geometry.*;
 
 ///
 /// Enthält alle Unterobjekte die zum späteren Gebrauch in Processing benötigt werden.
@@ -30,17 +25,19 @@ public class PJ3D extends Applet
 					 alpha; 										///< Beschreibung der Alphafarbe
 	public final float DEFAULTCOLOR = 0.5f; 	///< Bestimmung der defaultfarbe
 	
-	private Vector3f transformVec;
+	// em05: wenn der default treanform vector erst spaeter definiert wird, wuerde ein setTransform vor der inizialisierung der camera nichts bewirken
+	private Vector3f transformVec = new Vector3f(0, 0, 0); /// Default Transform Vector
 
 	///
 	/// Standart Konstruktor.
 	///
 	public PJ3D()
 	{
-		this.mWinHeight = 800;
-		this.mWinWidth = 600;
+		// em05: habe reihenfolge vertauscht und default aufloesung heruntergesetzt
+		this.mWinWidth = 640;
+		this.mWinHeight = 480;
 		
-		InitPJ3DEasy(mWinWidth, mWinHeight);	
+		InitPJ3DSimple(mWinWidth, mWinHeight);	
 	}
 
 	///
@@ -48,8 +45,8 @@ public class PJ3D extends Applet
 	///
 	public PJ3D(int windowWidth, int windowHeight)
 	{
-		this.mWinHeight = windowHeight;
 		this.mWinWidth = windowWidth;
+		this.mWinHeight = windowHeight;
 		
 		InitPJ3D(mWinWidth, mWinHeight);
 	}
@@ -61,9 +58,24 @@ public class PJ3D extends Applet
 	{		
 		setLayout( new BorderLayout( ) );
 		Frame f = new Frame("PJ3D");
-	    f.pack();
-	    f.show();
+	    //f.pack();
+	    //f.show();
 	    f.setSize(mWinWidth, mWinHeight);
+	    // em05: damits fenster wieder zugeht, will aber nicht
+	    /*
+	    f.addWindowListener(new WindowAdapter()
+	    					{
+	    		       			public void windowClosing(WindowEvent e)
+	    		       			{
+	    		       				System.exit(0);
+	    		       			}
+	    		       			
+	    		       			public void windowOpened(WindowEvent e)
+	    		       			{
+	    		       				System.out.println("opening window..");
+	    		       			}
+	    					});
+	    					*/
 	    
 	    // default colors
 	    backgroundColor = new Color3f(1.0f, 1.0f, 1.0f);
@@ -78,16 +90,17 @@ public class PJ3D extends Applet
 	    branch = mb.InitBranch();
 	    
 	    // default transform vector
-	    transformVec = new Vector3f(0, 0, 0);
+	    //transformVec = DEFAULTVECTOR;
 	    
 	    f.show( );
 	    return branch;
 	}
 	
 	///
-	/// Initialisierung der äußeren BranchGroup. Der "easy" weg
+	/// Initialisierung der äußeren BranchGroup. Der "simple" weg
 	///
-	public BranchGroup InitPJ3DEasy(int mWinWidth, int mWinHeight)
+	// em05: easy in simple umgetauft 
+	public BranchGroup InitPJ3DSimple(int mWinWidth, int mWinHeight)
 	{		
 		setLayout( new BorderLayout( ) );
 		Frame f = new Frame("PJ3D");
@@ -108,7 +121,7 @@ public class PJ3D extends Applet
 	    branch = mb.InitBranch();
 	    
 	    // default transform vector
-	    transformVec = new Vector3f(0, 0, 0);
+	    //transformVec = DEFAULTVECTOR;
 	    
 	    f.show( );
 	    

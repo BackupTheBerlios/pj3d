@@ -68,6 +68,5 @@ public class PJ3DLight
 		BranchGroup lightBranch = new BranchGroup();
 		lightBranch.addChild(light1);
 		mMb.getLocale().addBranchGraph(lightBranch);
-
 	}
 }
