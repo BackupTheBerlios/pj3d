@@ -28,6 +28,18 @@ public class Pj3dBox extends Pj3dToolbox
 		this.xdim = Int2Float(x);
 		this.InitPrimitive(xdim, xdim, xdim);
 	}
+	
+	///
+	/// set the Box to the "zero" point of the world
+	///
+	public Pj3dBox(Pj3d parent, float x)
+	{
+		this.parent = parent;
+		this.transform = new Pj3dTransform();
+		this.shader = new Pj3dShader(parent);
+		this.xdim = x;
+		this.InitPrimitive(xdim, xdim, xdim);
+	}
 
 	///
 	/// set the Box to the given coordinades
@@ -40,6 +52,20 @@ public class Pj3dBox extends Pj3dToolbox
 		this.xdim = Int2Float(x);
 		this.ydim = Int2Float(y);
 		this.zdim = Int2Float(z);
+		this.InitPrimitive(xdim, ydim, zdim);
+	}
+	
+	///
+	/// set the Box to the given coordinades
+	///	
+	public Pj3dBox(Pj3d parent, float x, float y, float z)
+	{
+		this.parent = parent;
+		this.transform = new Pj3dTransform();
+		this.shader = new Pj3dShader(parent);
+		this.xdim = x;
+		this.ydim = y;
+		this.zdim = z;
 		this.InitPrimitive(xdim, ydim, zdim);
 	}
 
