@@ -1,3 +1,4 @@
+import java.applet.*;
 import javax.media.j3d.*;
 import javax.vecmath.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ public class Pj3dScene
 	private Frame 		mFrame;
 	private Color3f 		mBgColor;
 	private Locale		locale;
+	private Applet parent;
 	private Canvas3D canvas;
 	public BranchGroup branch = new BranchGroup();
 	public Background 	background;
@@ -33,6 +35,7 @@ public class Pj3dScene
 	public Pj3dScene (Frame f, GraphicsConfiguration gc, Background bg)
 	{
 		this.mFrame = f;
+		//this.parent = parent;
 		this.background = bg;
 	 	this.canvas = new Canvas3D( gc );
 	}
@@ -43,7 +46,7 @@ public class Pj3dScene
 	///
 	public BranchGroup InitBranch()
 	{
-		mFrame.add( "Center", canvas );
+		//parent.add( "Center", canvas );
 	    
 	    VirtualUniverse univ = new VirtualUniverse();
 	    

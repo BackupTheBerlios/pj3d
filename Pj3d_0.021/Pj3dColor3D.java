@@ -2,6 +2,7 @@ import javax.media.j3d.Appearance;
 import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Material;
 import javax.media.j3d.TransparencyAttributes;
+import com.sun.j3d.utils.image.*;
 import javax.vecmath.Color3f;
 
 ///
@@ -354,4 +355,16 @@ public class Pj3dColor3D extends Pj3dToolbox
 		alpha = ColorInt2Float(s);
 		appearance.getTransparencyAttributes().setTransparency(alpha);
 	}
+	
+	///
+	/// set methode fuer texture
+	///
+	/*
+	// texture gibt es noch nicht, weil man parent ueberall uebergeben muesste. muss noch implementiert werden.
+	public void setTexture(String fileLocation)
+	{
+		TextureLoader loader = new TextureLoader(fileLocation, new String("RGB"), parent);
+		Texture texture = loader.getTexture();
+	}
+	*/
 }

@@ -9,15 +9,15 @@ import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-//import java.awt.event.*;
+import java.awt.event.*;
 
 ///
 /// Enthält alle Unterobjekte die zum späteren Gebrauch in Processing benötigt werden.
 /// Die Unterobjekte: z.B. PJ3DBox oder  PJ3DSphere... werden bei der ersten 
 /// Initialisierung mit Referenziert. 
 ///
-//public class Pm extends PJ3DCommands implements KeyListener, MouseListener, MouseMotionListener
-public class Pj3d extends Applet
+
+public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMotionListener
 {
 	private int mWinHeight, mWinWidth;
 	private Pj3dScene mb;
@@ -38,11 +38,21 @@ public class Pj3d extends Applet
 	textColor;													///< Beschreibung der Text2Dfarbe
 	public float shininess, 								///< Beschreibung der Shininessfarbe
 	alpha;	
+	public Applet parent;
+	
+	// events
+	public int key;
+	public boolean keyPressed;
+	public boolean keyReleased;
+	public int mouseX;
+	public int mouseY;
+	public boolean mousePressed;
+	public boolean mouseReleased;
 	
 	///
 	/// Standart Konstruktor.
 	///
-	public Pj3d()
+	public Pj3d(Applet parent)
 	{
 		// em05: habe reihenfolge vertauscht und default aufloesung heruntergesetzt
 		this.mWinWidth = 640;
@@ -54,8 +64,9 @@ public class Pj3d extends Applet
 	///
 	/// Benötigt als Werte die gewünschte Fenstergrösse.
 	///
-	public Pj3d(int windowWidth, int windowHeight)
+	public Pj3d(Applet parent, int windowWidth, int windowHeight)
 	{
+		this.parent = (Applet)parent;
 		this.mWinWidth = windowWidth;
 		this.mWinHeight = windowHeight;
 		// um mit processings syntax zu arbeiten...
@@ -72,12 +83,15 @@ public class Pj3d extends Applet
 	{	
 		//toolbox = new PJ3DToolbox();
 		setLayout( new BorderLayout( ) );
-		Frame f = new Frame("Pm");
+		//parent.width = 640;
+		//parent.resize(640, 480);
+
+		Frame f = new Frame("pj3d");
 	    f.pack();
 	    f.show();
 	    f.setSize(mWinWidth, mWinHeight);
 
-	    GraphicsConfiguration gc = this.getGraphicsConfiguration();
+	    GraphicsConfiguration gc = parent.getGraphicsConfiguration();
 	    
 	    // default colors
 	    backgroundColor = new Color3f(0f, 0f, 0f);
@@ -98,6 +112,7 @@ public class Pj3d extends Applet
 	    
 	    // get the canvas3d to add the mouse and keylisteners
 	    canvas = mb.getMBCanvas3D();
+	    f.add( "Center", canvas );
 	    
 	    f.show( );
 	    return branch;
@@ -163,6 +178,24 @@ public class Pj3d extends Applet
 		Pj3dBox b = new Pj3dBox(this, x);
 		return b;
 	}
+    
+    public Pj3dSphere Sphere(int x)
+	{
+    	Pj3dSphere s = new Pj3dSphere(this, x);
+		return s;
+	}
+    
+    public Pj3dPlane Pj3dPlane(int x, int z)
+	{
+    	Pj3dPlane plane = new Pj3dPlane(this, x, z);
+		return plane;
+	}
+    
+    public Pj3dObj Pj3dObj(String file)
+	{
+    	Pj3dObj obj = new Pj3dObj(this, file);
+		return obj;
+	}
 	
 	public Pj3dCamera Camera()
 	{
@@ -202,5 +235,59 @@ public class Pj3d extends Applet
 		{
    	    	System.out.println(e + "\n" + "Texture Import failed!");
    	    }
+    }
+    
+    
+    // keyboard and mouse events
+    // alle variablen public oder halt get/set
+	
+    public void keyTyped (KeyEvent e) { }
+
+    public void keyPressed (KeyEvent e)
+    {
+    	keyPressed = true;
+    	keyReleased = false;
+    	key = e.getKeyCode();
+    }
+
+    public void keyReleased (KeyEvent e)
+    {
+    	keyPressed = false;
+    	keyReleased = true;
+    	key = 0;
+    }
+    
+    // mouseListeners
+    public void mousePressed (MouseEvent m)
+    {
+    	mousePressed = true;
+    	mouseReleased = false;
+    	mouseX = m.getX();
+    	mouseY = m.getY();
+    }
+    
+    public void mouseExited (MouseEvent m) { }
+    
+    public void mouseEntered (MouseEvent m) { }
+    
+    public void mouseClicked (MouseEvent m) { }
+    
+    public void mouseReleased (MouseEvent m)
+    {
+    	mousePressed = false;
+    	mouseReleased = true;
+    }
+    
+    // mousemotionlistener
+    public void mouseMoved (MouseEvent n)
+    {
+    	mouseX = n.getX();
+    	mouseY = n.getY();
+    }
+    
+    public void mouseDragged (MouseEvent n)
+    {
+    	mouseX = n.getX();
+    	mouseY = n.getY();
     }
 }

@@ -66,4 +66,10 @@ public class Pj3dToolbox
 		int pcolor = (a << 24) | (x << 16) | (y << 8) | z;
 		return pcolor;
 	}
+	
+	public Color3f RGB2Color3f(int r, int g, int b)
+	{
+		Color3f c3f = new Color3f(Int2Float(r), Int2Float(g), Int2Float(b));
+		return c3f;
+	}
 }

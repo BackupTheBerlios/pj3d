@@ -2,10 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/admin/Desktop/zeug/di/pde.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/admin/Desktop/zeug/di/antlr.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/admin/Desktop/zeug/di/comm.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/admin/Desktop/zeug/di/kjc.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/admin/Desktop/zeug/di/oro.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
