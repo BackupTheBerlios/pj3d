@@ -6,7 +6,7 @@ public class Pj3dToolbox
 	{
 		int iVal = 0;
 		if (fVal <= 1f & fVal >= 0f)
-			iVal = (int)(fVal * 255f);
+			iVal = (int)(fVal * 256f);
 		else if (fVal < 0f)
 			iVal = 0;
 		else if (fVal > 1f)
@@ -18,7 +18,7 @@ public class Pj3dToolbox
 	{
 		float fVal = 0f;
 		if (iVal <= 255 & iVal >= 0)
-			fVal = (float)iVal / 255f;
+			fVal = (float)iVal / 256f;
 		else if (iVal < 0f)
 			fVal = 0f;
 		else if (iVal > 255)
@@ -29,13 +29,19 @@ public class Pj3dToolbox
 	// hier muss noch ein richtiges groessenverhaeltnis gefunden werden..
 	public float Int2Float(int iVal)
 	{
-		float fVal = (float)iVal / 255f;
+		float fVal = (float)iVal / 256f;
 		return fVal;
+	}
+	
+	public int Float2Int(float fVal)
+	{
+		int iVal = (int)(fVal * 256f);
+		return iVal;
 	}
 	
 	public double Int2Double(int iVal)
 	{
-		double fVal = (double)iVal / 255f;
+		double fVal = (double)iVal / 256f;
 		return fVal;
 	}
 	

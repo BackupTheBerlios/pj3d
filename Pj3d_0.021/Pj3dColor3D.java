@@ -17,6 +17,7 @@ public class Pj3dColor3D extends Pj3dToolbox
 	private Color3f text3D = new Color3f();
 	private float shininess = 0.0f;
 	private float alpha = 0.0f;
+	private Pj3dToolbox ptools = new Pj3dToolbox();
 	
 	public Appearance appearance;
 	
@@ -76,15 +77,39 @@ public class Pj3dColor3D extends Pj3dToolbox
 	}
 	
 	///
-	/// get methode fuer ambient
+	/// get methode fuer Ambient als processing color (int)
 	///
-	private Color3f getAmbient()
+	private int getAmbient()
 	{
-		return ambient;
+		return ptools.color3f2Color(ambient);
 	}
 	
 	///
-	/// set methode fuer ambient
+	/// get methode fuer Ambient red als processing color (int)
+	///
+	private int getAmbientR()
+	{
+		return Float2Int(ambient.x);
+	}
+
+	///
+	/// get methode fuer Ambient green als processing color (int)
+	///
+	private int getAmbientG()
+	{
+		return Float2Int(ambient.y);
+	}
+	
+	///
+	/// get methode fuer Ambient blue als processing color (int)
+	///
+	private int getAmbientB()
+	{
+		return Float2Int(ambient.z);
+	}
+	
+	///
+	/// set methode fuer Ambient als int r, g, b
 	///
 	public void setAmbient(int r, int g, int b)
 	{
@@ -96,15 +121,49 @@ public class Pj3dColor3D extends Pj3dToolbox
 	}
 	
 	///
-	/// get methode fuer diffuse
+	/// set methode fuer Ambient als processing color (int)
 	///
-	private Color3f getDiffuse()
+	public void setAmbient(int color)
 	{
-		return diffuse;
+		Color3f c3f = ptools.color2Color3f(color);
+		
+		appearance.getMaterial().setAmbientColor(c3f);
 	}
 	
 	///
-	/// set methode fuer diffuse
+	/// get methode fuer Diffuse als processing color (int)
+	///
+	private int getDiffuse()
+	{
+		return ptools.color3f2Color(diffuse);
+	}
+	
+	///
+	/// get methode fuer Diffuse red als processing color (int)
+	///
+	private int getDiffuseR()
+	{
+		return Float2Int(diffuse.x);
+	}
+
+	///
+	/// get methode fuer Diffuse green als processing color (int)
+	///
+	private int getDiffuseG()
+	{
+		return Float2Int(diffuse.y);
+	}
+	
+	///
+	/// get methode fuer Diffuse blue als processing color (int)
+	///
+	private int getDiffuseB()
+	{
+		return Float2Int(diffuse.z);
+	}
+	
+	///
+	/// set methode fuer Diffuse als int r, g, b
 	///
 	public void setDiffuse(int r, int g, int b)
 	{
@@ -116,35 +175,103 @@ public class Pj3dColor3D extends Pj3dToolbox
 	}
 	
 	///
-	/// get methode fuer emissive
+	/// set methode fuer Diffuse als processing color (int)
 	///
-	private Color3f getEmissiveColor()
+	public void setDiffuse(int color)
 	{
-		return emissive;
+		Color3f c3f = ptools.color2Color3f(color);
+		
+		appearance.getMaterial().setDiffuseColor(c3f);
 	}
 	
 	///
-	/// set methode fuer emissive
+	/// get methode fuer emissive als processing color (int)
+	///
+	private int getEmissive()
+	{
+		return ptools.color3f2Color(emissive);
+	}
+	
+	///
+	/// get methode fuer emissive red als processing color (int)
+	///
+	private int getEmissiveR()
+	{
+		return Float2Int(emissive.x);
+	}
+
+	///
+	/// get methode fuer emissive green als processing color (int)
+	///
+	private int getEmissiveG()
+	{
+		return Float2Int(emissive.y);
+	}
+	
+	///
+	/// get methode fuer emissive blue als processing color (int)
+	///
+	private int getEmissiveB()
+	{
+		return Float2Int(emissive.z);
+	}
+	
+	///
+	/// set methode fuer emissive als int r, g, b
 	///
 	public void setEmissive(int r, int g, int b)
 	{
-		diffuse.x = Int2Float(r);
-		diffuse.y = Int2Float(g);
-		diffuse.z = Int2Float(b);
+		emissive.x = Int2Float(r);
+		emissive.y = Int2Float(g);
+		emissive.z = Int2Float(b);
 		
-		appearance.getMaterial().setEmissiveColor(new Color3f(diffuse.x, diffuse.y, diffuse.z));
+		appearance.getMaterial().setEmissiveColor(new Color3f(emissive.x, emissive.y, emissive.z));
 	}
 	
 	///
-	/// get methode fuer specular
+	/// set methode fuer ambient als processing color (int)
 	///
-	private Color3f getSpecular()
+	public void setEmissive(int color)
 	{
-		return specular;
+		Color3f c3f = ptools.color2Color3f(color);
+		
+		appearance.getMaterial().setEmissiveColor(c3f);
 	}
 	
 	///
-	/// set methode fuer specular
+	/// get methode fuer specular als processing color (int)
+	///
+	private int getSpecular()
+	{
+		return ptools.color3f2Color(specular);
+	}
+	
+	///
+	/// get methode fuer specular red als processing color (int)
+	///
+	private int getSpecularR()
+	{
+		return Float2Int(specular.x);
+	}
+
+	///
+	/// get methode fuer specular green als processing color (int)
+	///
+	private int getSpecularG()
+	{
+		return Float2Int(specular.y);
+	}
+	
+	///
+	/// get methode fuer specular blue als processing color (int)
+	///
+	private int getSpecularB()
+	{
+		return Float2Int(specular.z);
+	}
+	
+	///
+	/// set methode fuer emissive als int r, g, b
 	///
 	public void setSpecular(int r, int g, int b)
 	{
@@ -156,6 +283,16 @@ public class Pj3dColor3D extends Pj3dToolbox
 	}
 	
 	///
+	/// set methode fuer specular als processing color (int)
+	///
+	public void setSpecular(int color)
+	{
+		Color3f c3f = ptools.color2Color3f(color);
+		
+		appearance.getMaterial().setSpecularColor(c3f);
+	}
+	
+	///
 	/// get methode fuer text3D
 	///
 	private Color3f getText3D()
@@ -164,7 +301,7 @@ public class Pj3dColor3D extends Pj3dToolbox
 	}
 	
 	///
-	/// set methode fuer text3D
+	/// set methode fuer text3D als int r, g, b
 	///
 	public void setText3D(int r, int g, int b)
 	{
@@ -173,6 +310,15 @@ public class Pj3dColor3D extends Pj3dToolbox
 		text3D.z = Int2Float(b);
 		
 		appearance.getMaterial().setSpecularColor(new Color3f(text3D.x, text3D.y, text3D.z));
+	}
+	
+	///
+	/// set methode fuer text3D als processing color
+	///
+	public void setText3D(int color)
+	{
+		Color3f c3f = ptools.color2Color3f(color);
+		appearance.getMaterial().setSpecularColor(c3f);
 	}
 	
 	///
