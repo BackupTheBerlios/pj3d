@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMotionListener
 {
+	private Frame frame = new Frame("pj3d");
 	private int mWinHeight, mWinWidth; 
 	private Pj3dScene mb;
 	private BranchGroup branch;
@@ -91,10 +92,10 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 		//parent.width = 640;
 		//parent.resize(640, 480);
 
-		Frame f = new Frame("pj3d");
-	    f.pack();
-	    f.show();
-	    f.setSize(mWinWidth, mWinHeight);
+		//Frame frame = new Frame("pj3d");
+	    frame.pack();
+	    frame.show();
+	    frame.setSize(mWinWidth, mWinHeight);
 
 	    GraphicsConfiguration gc = parent.getGraphicsConfiguration();
 	    
@@ -112,7 +113,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    //bg = new Background();
 	    bg = InitBackground();
 	    
-	    mb = new Pj3dScene(f, gc, bg);
+	    mb = new Pj3dScene(frame, gc, bg);
 	    branch = mb.InitBranch();
 	    
 	    // get the canvas3d to add the mouse and keylisteners
@@ -121,9 +122,11 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    canvas.addMouseListener(this);
 	    canvas.addMouseMotionListener(this);
 	    System.out.println(canvas.getBounds());
-	    f.add( "Center", canvas );
+	    frame.add( "Center", canvas );
 	    
-	    f.show( );
+	    frame.show( );
+	    frame.addWindowListener(new Pj3dWindowClosingAdapter(true));
+	    
 	    return branch;
 	}
 	
@@ -328,7 +331,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     ///
     /// not implemented
     ///
-    public void mouseExited (MouseEvent m) { }
+    public void mouseExited (MouseEvent m) {}
     
     ///
     /// not implemented
@@ -406,14 +409,16 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    	//System.out.println("7");
 	    	PickRay pickRay = new PickRay(mousePoint,rayVector);
 	    	System.out.println("pickRay: "+pickRay);
-	    	try{
-	    	System.out.println("getLocale: "+getMBLocale().pickClosest(pickRay));
-	    	SceneGraphPath sceneGraphPath = getMBLocale().pickClosest(pickRay);
-	    	System.out.println("9");
-	    	//System.out.println(sceneGraphPath.toString());
-	    	//pickedObject = (BranchGroup)sceneGraphPath.getNode(0);
+	    	try
+			{
+	    		System.out.println("getLocale: "+getMBLocale().pickClosest(pickRay));
+	    		SceneGraphPath sceneGraphPath = getMBLocale().pickClosest(pickRay);
+	    		System.out.println("9");
+	    		//System.out.println(sceneGraphPath.toString());
+	    		//pickedObject = (BranchGroup)sceneGraphPath.getNode(0);
 	    	}
 	    	catch (Exception e) { System.out.println("catch scenegraphpath: "+e); }
+	    	
 	    	objPicked = true;
 	    	
 	    	System.out.println(objPicked);
