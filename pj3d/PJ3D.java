@@ -13,6 +13,7 @@ import java.awt.event.*;
 public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMotionListener
 {
 	private int mWinHeight, mWinWidth;
+	public int width, height;
 	public int mouseX, mouseY, key;							// public mouse and key values for processing
 	public boolean mousePressed, keyPressed, mouseReleased, keyReleased;	// boolean mouse and keyboard states
 	private MainBranch 	mb;
@@ -22,7 +23,8 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
 							ambientColor, 					///< Beschreibung der Ambientfarbe
 							diffuseColor, 						///< Beschreibung der Diffusefarbe
 							emissiveColor,					///< Beschreibung der Emissivefarbe
-							specularColor; 					///< Beschreibung der Specularfarbe
+							specularColor, 					///< Beschreibung der Specularfarbe
+							textColor;						///< Beschreibung der Text2Dfarbe
 	public float shininess, 								///< Beschreibung der Shininessfarbe
 					 alpha; 										///< Beschreibung der Alphafarbe
 	public final float DEFAULTCOLOR = 0.5f; 	///< Bestimmung der defaultfarbe
@@ -49,6 +51,9 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
 	{
 		this.mWinWidth = windowWidth;
 		this.mWinHeight = windowHeight;
+		// um mit processings syntax zu arbeiten...
+		this.width = windowWidth;
+		this.height = windowHeight;
 		
 		InitPJ3D(mWinWidth, mWinHeight);
 	}
@@ -60,8 +65,8 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
 	{		
 		setLayout( new BorderLayout( ) );
 		Frame f = new Frame("PJ3D");
-	    //f.pack();
-	    //f.show();
+	    f.pack();
+	    f.show();
 	    f.setSize(mWinWidth, mWinHeight);
 	    // em05: damits fenster wieder zugeht, will aber nicht
 	    /*
@@ -85,6 +90,7 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
 	    diffuseColor = new Color3f(1.0f, 1.0f, 1.0f);
 	    emissiveColor = new Color3f(0.0f, 0.0f, 0.0f);
 	    specularColor = new Color3f(1.0f, 1.0f, 1.0f);
+	    textColor = new Color3f(0.5f, 0.5f, 0.5f);
 	    shininess = DEFAULTCOLOR;
 	    alpha = 0.0f;
 	    
@@ -187,12 +193,30 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
 	}
 	
 	///
-	/// Erstellt ein .x Objekt?? Welche Formate kann man da angeben?
+	/// Erstellt ein .obj Objekt?? Welche Formate kann man da angeben? -> im moment nur obj. andere importer habe ich noch nicht eingebunden
 	///
 	public PJ3DObj PJ3DObj( String fileLocation )
 	{
 		PJ3DObj s = new PJ3DObj (branch, fileLocation, transformVec);
 		return s;
+	}
+	
+	///
+	/// Erstellt Text2D
+	///
+	public PJ3DText2D PJ3DText2D(String text, String font, int textSize)
+	{
+		PJ3DText2D t = new PJ3DText2D(branch, text, font, textSize, transformVec, textColor);
+		return t;
+	}
+	
+	///
+	/// Erstellt Text3D
+	///
+	public PJ3DText3D PJ3DText3D(String text, String font)
+	{
+		PJ3DText3D t = new PJ3DText3D(branch, text, font, transformVec, ambientColor, diffuseColor, emissiveColor, specularColor, shininess, alpha);
+		return t;
 	}
 	
 	///
@@ -244,6 +268,16 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
 		specularColor.x = r;
 		specularColor.y = g;
 		specularColor.z = b;
+	}
+	
+	///
+	/// Bestimmung der TextFarbe fuer Text2D
+	///
+	public void setTextColor(float r, float g, float b)
+	{
+		textColor.x = r;
+		textColor.y = g;
+		textColor.z = b;
 	}
 	
 	///
@@ -321,17 +355,7 @@ public class PJ3D extends Applet implements KeyListener, MouseListener, MouseMot
     
     public void mouseDragged (MouseEvent n)
     {
-    	/*
     	mouseX = n.getX();
     	mouseY = n.getY();
-    	if (mouseY-mouseYpast < 10 && mouseX-mouseXpast < 10)
-    	{
-    		cam.moveCam(0.0f, 0.0f, mouseY-mouseYpast);
-    		cam.rotateCam(0.0f, -(mouseX-mouseXpast)/100f, 0.0f);
-    	}
-    	mouseXpast = n.getX();
-		mouseYpast = n.getY();
-		System.out.println(mouseY+" "+mouseYpast);
-		*/
     }
 }
