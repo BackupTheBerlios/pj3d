@@ -169,6 +169,14 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     }
     
 	///
+	/// get masterBranch
+	///
+    public BranchGroup getMasterBranch()
+    {
+    	return mb.branch;
+    }
+    
+	///
 	/// add model to branch
 	///
     public void AddModel(BranchGroup child)

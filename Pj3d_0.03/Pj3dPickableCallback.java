@@ -19,9 +19,9 @@ public class Pj3dPickableCallback extends Object implements PickingCallback
 	{
 		//System.out.println("Pj3dPickableCallback is init");
 	}
+	
 	public void transformChanged(int type, javax.media.j3d.TransformGroup tg)
 	{
 		System.out.println("pick via callback");
 	}
-
 }

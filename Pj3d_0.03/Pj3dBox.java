@@ -5,6 +5,7 @@ import com.sun.j3d.utils.geometry.Box;
 //import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 //import com.sun.j3d.utils.behaviors.*;
 import com.sun.j3d.utils.behaviors.picking.*;
+
 ///
 ///  creates a box primitve
 ///
@@ -80,25 +81,31 @@ public class Pj3dBox extends Pj3dToolbox
 	{
 		primitiveBranch = new BranchGroup();
 		primitiveBranch.setPickable(true);
+		
 		primitiveBranch.setCapability(BranchGroup.ENABLE_PICK_REPORTING);
 		primitiveBranch.setCapability(BranchGroup.ALLOW_DETACH);
 		primitiveBranch.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		primitiveBranch.setCapability(BranchGroup.ALLOW_PICKABLE_READ);
+
 		transform.transform3D = new Transform3D();
 		transform.transformVector = new Vector3f(0f, 0f, 0f);
 		transform.transform3D.set(transform.transformVector);
 		transform.transformgroup = new TransformGroup(transform.transform3D);
+		
 		transform.transformgroup.setCapability( TransformGroup.ALLOW_CHILDREN_READ );
 		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_WRITE );
-		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_READ );
-		
+		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_READ );		
+		transform.transformgroup.setCapability(TransformGroup.ENABLE_PICK_REPORTING);
+        
 		shader.appearance = shader.CreateAppearance(parent.ambientColor, parent.diffuseColor, parent.emissiveColor, parent.specularColor, parent.shininess, parent.alpha);
 
 		int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS; 
 		Box box = new Box(xdim, ydim, zdim, primflags, shader.appearance);
 		box.setCapability(Box.ALLOW_CHILDREN_READ);
+		
 		box.getShape(0).setCapability(Shape3D.ALLOW_GEOMETRY_READ);
 		box.getShape(0).setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		box.getShape(0).setCapability(Shape3D.ENABLE_PICK_REPORTING);
 		
 		// picking und pickable callback test
 		//-------------------------------------------------------------------------
