@@ -1,33 +1,41 @@
-import java.applet.*;
 import javax.media.j3d.*;
 import javax.vecmath.*;
-import java.util.Enumeration;
-import java.awt.*;
-import java.awt.event.*;
-import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
 
-public class PJ3DCamera {
+///
+/// Enthält aller nötigen Methoden um eine Kamera zu erzeugen und zu bewegen
+///
+public class PJ3DCamera 
+{
+	private Canvas3D 			canvas;
+	private Locale 				locale;
+	private Vector3f 			mCamVec;
+	private MainBranch		mMb;
+	private View 					view;
+	public TransformGroup 	camGroup;
+	public Transform3D 		camTrans;
+	public ViewPlatform 		myViewPlatform;
 	
-	public Canvas3D canvas;
-	public Locale locale;
-	public TransformGroup camGroup;
-	public Transform3D camTrans;
-	public Vector3f camVec;
-	public ViewPlatform myViewPlatform;
-	
-	public PJ3DCamera(Canvas3D canvas, Locale locale)
+	///
+	/// Konstruktor 
+	///
+	public PJ3DCamera(Canvas3D canvas, Locale locale, MainBranch mb, Vector3f transformVec)
 	{
 		this.canvas = canvas;
 		this.locale = locale;
-		// camera initialisieren auf 0,0,0 (oder wollen wir ne camera auf nen bestimmten punkt inizialisieren?)
-		//this.initCamera(0, 0, 0);
+		this.mCamVec = new Vector3f(transformVec.x, transformVec.y , transformVec.z);
+		this.mMb = mb;
+		InitCamera();
 	}
 	
-	public BranchGroup initCamera(float x, float y, float z)
+	///
+	/// Für view.setBackClipDistance und view.setFieldOfView sind default Werte vergeben.
+	/// Kann man noch set Methoden schreiben
+	///
+	private void InitCamera()
 	{
-		BranchGroup cam = new BranchGroup();
-		cam.setCapability(cam.ALLOW_CHILDREN_READ);
-		cam.setCapability(cam.ALLOW_CHILDREN_WRITE);
+		BranchGroup camBranch = new BranchGroup();
+		camBranch.setCapability(camBranch.ALLOW_CHILDREN_READ);
+		camBranch.setCapability(camBranch.ALLOW_CHILDREN_WRITE);
         
 		ViewPlatform platform = new ViewPlatform();
 		Transform3D location = new Transform3D();
@@ -35,7 +43,7 @@ public class PJ3DCamera {
 		body.setNominalEyeHeightFromGround(20.0);
 		PhysicalEnvironment env = new PhysicalEnvironment();
 
-		View view = new View();
+		view = new View();
 		view.addCanvas3D(canvas);
 	    view.setBackClipDistance(1000);
 	    view.setFieldOfView(1.5);
@@ -43,14 +51,13 @@ public class PJ3DCamera {
 	    view.setPhysicalBody(body);
 	    view.setPhysicalEnvironment(env);
 	    view.attachViewPlatform(platform);
-	    
+
 	    myViewPlatform = new ViewPlatform();
 	    view.attachViewPlatform(myViewPlatform);
 	    
 	    // camera auf vector 0,0,0 setzen
         camTrans = new Transform3D();
-        camVec = new Vector3f(x, y , z);
-        camTrans.set(camVec);
+        camTrans.set(mCamVec);
         
         // transformgroup erstellen und rechte fuer setzen (modes auslesen, schreiben, etc)
         camGroup = new TransformGroup(camTrans);
@@ -60,13 +67,51 @@ public class PJ3DCamera {
         camGroup.setCapability(camGroup.ALLOW_CHILDREN_WRITE);
         
         camGroup.addChild(myViewPlatform);
-	    cam.addChild(camGroup);
-	    
-	    //KeyNavigatorBehavior myKeyNavigationBehavior = new KeyNavigatorBehavior (camGroup);
-		//cam.addChild(myKeyNavigationBehavior);
-		
-	    // camera zu locale hinzufuegen
-	    //locale.addBranchGraph(cam);
-	    return cam;
+        camBranch.addChild(camGroup);
+        
+        mMb.getLocale().addBranchGraph(camBranch);
 	}
+	
+	///
+	/// get Methode fuer Locale
+	///
+	public Locale getLocale()
+	{
+		return locale;
+	}
+	
+	///
+	/// Positionierung der Kamera
+	///
+    public void setCamerapos(float x, float y, float z)
+    {
+	    // neuen Vector3f mit xyz position erstellen
+    	mCamVec.x = x;
+    	mCamVec.y = y;
+    	mCamVec.z = z;
+	    
+	    // in Transform3D schreiben
+	    camTrans.setTranslation(mCamVec);
+	    camGroup.setTransform(camTrans);
+    }
+    
+	///
+	/// Rotiert die Kamera
+	///
+    public void RotateCamera(double x, double y, double z)
+    {
+	    Transform3D newTransX = new Transform3D();
+	    Transform3D newTransY = new Transform3D();
+	    Transform3D newTransZ = new Transform3D();
+	    //newTrans.add(camTrans);
+	    newTransX.rotX(x);
+	    newTransY.rotY(y);
+	    newTransZ.rotZ(z);
+	
+	    camTrans.mul(newTransX);
+	    camTrans.mul(newTransY);
+	    camTrans.mul(newTransZ);
+
+	    camGroup.setTransform(camTrans);
+    }
 }

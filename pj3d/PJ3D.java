@@ -1,6 +1,7 @@
 import java.applet.*;
 import javax.media.j3d.*;
 import javax.vecmath.*;
+
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,28 +13,36 @@ import com.sun.j3d.utils.geometry.*;
 ///
 /// Enthält alle Unterobjekte die zum späteren Gebrauch in Processing benötigt werden.
 /// Die Unterobjekte: z.B. PJ3DBox oder  PJ3DSphere... werden bei der ersten 
-/// Initialisierung mit Referenziert. Blah...
+/// Initialisierung mit Referenziert. 
 ///
 public class PJ3D extends Applet
 {
 	private int mWinHeight, mWinWidth; 
-	private MainBranch mb;
-	private BranchGroup branch;
+	private MainBranch 	mb;
+	private BranchGroup 	branch;
 	private float mColorBgWorldR, mColorBgWorldG, mColorBgWorldB;
-	/// Hier kann eine Erklärung der eizelnen Werte rein, was sicherlich nicht schlecht ist fuer eine Processing user.
-	public Color3f backgroundColor, ambientColor, diffuseColor, emissiveColor, specularColor;	
-	/// Hier kann eine Erklärung der eizelnen Werte rein, was sicherlich nicht schlecht ist fuer eine Processing user. 
-	public float shininess, alpha;
-	/// Jaja, die Default Color
-	public final float DEFAULTCOLOR = 0.5f;
+	public Color3f backgroundColor, 					///< Hintergrundfarbe der 3D Welt
+							ambientColor, 					///< Beschreibung der Ambientfarbe
+							diffuseColor, 						///< Beschreibung der Diffusefarbe
+							emissiveColor,					///< Beschreibung der Emissivefarbe
+							specularColor; 					///< Beschreibung der Specularfarbe
+	public float shininess, 								///< Beschreibung der Shininessfarbe
+					 alpha; 										///< Beschreibung der Alphafarbe
+	public final float DEFAULTCOLOR = 0.5f; 	///< Bestimmung der defaultfarbe
 	
 	private Vector3f transformVec;
-	
+
 	///
 	/// Standart Konstruktor.
 	///
-	public PJ3D(){}
-	
+	public PJ3D()
+	{
+		this.mWinHeight = 800;
+		this.mWinWidth = 600;
+		
+		InitPJ3DEasy(mWinWidth, mWinHeight);	
+	}
+
 	///
 	/// Benötigt als Werte die gewünschte Fenstergrösse.
 	///
@@ -46,7 +55,7 @@ public class PJ3D extends Applet
 	}
 	
 	///
-	/// Initialisierung der äußeren BranchGroup.
+	/// Initialisierung der äußeren BranchGroup. Der "normale" weg
 	///
 	public BranchGroup InitPJ3D(int mWinWidth, int mWinHeight)
 	{		
@@ -73,6 +82,59 @@ public class PJ3D extends Applet
 	    
 	    f.show( );
 	    return branch;
+	}
+	
+	///
+	/// Initialisierung der äußeren BranchGroup. Der "easy" weg
+	///
+	public BranchGroup InitPJ3DEasy(int mWinWidth, int mWinHeight)
+	{		
+		setLayout( new BorderLayout( ) );
+		Frame f = new Frame("PJ3D");
+	    f.pack();
+	    f.show();
+	    f.setSize(mWinWidth, mWinHeight);
+	    
+	    // default colors
+	    backgroundColor = new Color3f(1.0f, 1.0f, 1.0f);
+	    ambientColor = new Color3f(0.2f, 0.2f, 0.2f);
+	    diffuseColor = new Color3f(1.0f, 1.0f, 1.0f);
+	    emissiveColor = new Color3f(0.0f, 0.0f, 0.0f);
+	    specularColor = new Color3f(1.0f, 1.0f, 1.0f);
+	    shininess = DEFAULTCOLOR;
+	    alpha = 0.0f;
+	    
+	    mb = new MainBranch(f, backgroundColor);
+	    branch = mb.InitBranch();
+	    
+	    // default transform vector
+	    transformVec = new Vector3f(0, 0, 0);
+	    
+	    f.show( );
+	    
+	    PJ3DLight();
+	    PJ3DCamera();
+	    
+	    return branch;
+	}
+	
+	///
+	/// Erstellung eines Lichtes.
+	///
+	public PJ3DLight PJ3DLight()
+	{
+		PJ3DLight s = new PJ3DLight (mb);
+		return s;
+	}
+	
+	///
+	/// Erstellung einer Kamera. Benötigt als Werte die xpos, ypos und zpos der 
+	/// Kamera.
+	///
+	public PJ3DCamera PJ3DCamera()
+	{
+		PJ3DCamera s = new PJ3DCamera (mb.getCanvas3D(), mb.getLocale(), mb,  transformVec);
+		return s;
 	}
 	
 	///
@@ -154,7 +216,7 @@ public class PJ3D extends Applet
 	}
 	
 	///
-	/// Bestimmung der Emissivefarbe
+	/// Bestimmung der Specularfarbe
 	///		
 	public void setSpecularColor(float r, float g, float b)
 	{
@@ -180,7 +242,7 @@ public class PJ3D extends Applet
 	}
 	
 	///
-	/// Bestimmung der Emissivefarbe
+	/// Bestimmung der Transform
 	///	
 	public void setTransform(float x, float y, float z)
 	{
