@@ -1,46 +1,52 @@
 import javax.media.j3d.*;
 import javax.vecmath.*;
-import com.sun.j3d.utils.geometry.Primitive;
-import com.sun.j3d.utils.geometry.Box;
 
-public class Pj3dPlane extends Pj3dToolbox
+import com.sun.j3d.utils.geometry.Primitive;
+import com.sun.j3d.utils.geometry.Text2D;
+import java.awt.Font;
+
+public class Pj3dText2D extends Pj3dToolbox
 {
 	private Pj3d parent;
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
 	public Pj3dTransform transform;
-	public Pj3dShader shader;
-
+	public Pj3dColor color;
+	
 	///
-	/// konstruktor : setzt das objekt auf die gegebenen koordinatent
-	///	
-	public Pj3dPlane(Pj3d parent, int x, int z)
+	/// konstruktor 1: setzt das objekt auf den "null" punkt
+	///
+	public Pj3dText2D(Pj3d parent, String text, String font, int size)
 	{
 		this.parent = parent;
 		this.transform = new Pj3dTransform();
-		this.shader = new Pj3dShader(parent);
-		this.xdim = Int2Float(x);
-		// fake, damit ich keine plane selbst schreiben muss..
-		this.ydim = 0.0001f;
-		this.zdim = Int2Float(z);
-		this.InitPrimitive(xdim, ydim, zdim);
+		this.color = new Pj3dColor();
+		this.InitPrimitive(text, font, size);
 	}
 	
-	private void InitPrimitive(float xdim, float ydim, float zdim)
+	private void InitPrimitive(String text, String font, int size)
 	{
 		primitiveBranch = new BranchGroup();
+		primitiveBranch.setPickable(true);
+		primitiveBranch.setCapability(BranchGroup.ENABLE_PICK_REPORTING);
+		primitiveBranch.setCapability(BranchGroup.ALLOW_CHILDREN_READ);
 		transform.transform3D = new Transform3D();
 		transform.transformVector = new Vector3f(0f, 0f, 0f);
 		transform.transform3D.set(transform.transformVector);
 		transform.transformgroup = new TransformGroup(transform.transform3D);
+		transform.transformgroup.setCapability( TransformGroup.ALLOW_CHILDREN_READ );
 		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_WRITE );
 		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_READ );
 		
-		shader.appearance = shader.CreateAppearance(parent.ambientColor, parent.diffuseColor, parent.emissiveColor, parent.specularColor, parent.shininess, parent.alpha);
 		int primflags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
-		Box box = new Box(xdim, ydim, zdim, primflags, shader.appearance);
-		transform.transformgroup.addChild( box );
+		
+		Text2D text2d = new Text2D(text, color.color2D, font, size, java.awt.Font.PLAIN);
+
+		text2d.setCapability(Shape3D.ALLOW_GEOMETRY_READ);
+		text2d.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+		
+		transform.transformgroup.addChild( text2d );
 		primitiveBranch.addChild(transform.transformgroup);
 		parent.AddModel(primitiveBranch);
 	}

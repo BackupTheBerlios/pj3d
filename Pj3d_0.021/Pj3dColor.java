@@ -1,9 +1,12 @@
-///
-/// einfaches color objekt: wird zZt noch nicht verwendet
-///
-public class Pj3dColor extends Pj3dToolbox 
+import javax.media.j3d.Appearance;
+import javax.media.j3d.ColoringAttributes;
+import javax.media.j3d.Material;
+import javax.media.j3d.TransparencyAttributes;
+import javax.vecmath.Color3f;
+
+public class Pj3dColor extends Pj3dToolbox
 {
-	private int r, g, b;
+	public Color3f color2D = new Color3f();
 	
 	///
 	/// default konstruktor
@@ -11,12 +14,12 @@ public class Pj3dColor extends Pj3dToolbox
 	public Pj3dColor() {}
 	
 	///
-	/// benötigt r, g, b als int
+	/// set methode fuer text2D
 	///
-	public Pj3dColor(int red, int green, int blue)
+	public void setColor(int r, int g, int b)
 	{
-		this.r = red;
-		this.g = green;
-		this.b = blue;
+		color2D.x = Int2Float(r);
+		color2D.y = Int2Float(g);
+		color2D.z = Int2Float(b);
 	}
 }

@@ -2,13 +2,20 @@ import javax.media.j3d.Appearance;
 import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Material;
 import javax.media.j3d.TransparencyAttributes;
+import javax.media.j3d.Texture;
+import javax.media.j3d.Texture2D;
+import javax.media.j3d.TextureAttributes;
+import javax.media.j3d.ImageComponent2D;
+import javax.media.j3d.Transform3D;
 import com.sun.j3d.utils.image.*;
 import javax.vecmath.Color3f;
+import java.applet.*;
+import java.awt.Toolkit;
 
 ///
 /// PmColor3D: die get methoden sind vorerst private
 ///
-public class Pj3dColor3D extends Pj3dToolbox
+public class Pj3dShader extends Pj3dToolbox
 {
 	private Color3f background = new Color3f();
 	private Color3f ambient = new Color3f();
@@ -19,13 +26,17 @@ public class Pj3dColor3D extends Pj3dToolbox
 	private float shininess = 0.0f;
 	private float alpha = 0.0f;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
+	private Applet parent;
 	
 	public Appearance appearance;
 	
 	///
 	/// default konstruktor
 	///
-	public Pj3dColor3D() {}
+	public Pj3dShader(Applet parentApplet)
+	{
+		this.parent = parentApplet;
+	}
 	
 	public Appearance CreateAppearance(Color3f ambientColor, Color3f diffuseColor, Color3f emissiveColor, Color3f specularColor, float shininess, float alpha)
 	{		
@@ -39,6 +50,10 @@ public class Pj3dColor3D extends Pj3dToolbox
 		appearance.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_WRITE);
 		appearance.setCapability(Appearance.ALLOW_TRANSPARENCY_ATTRIBUTES_READ);
 		appearance.setCapability(Appearance.ALLOW_TRANSPARENCY_ATTRIBUTES_WRITE);
+		appearance.setCapability(Appearance.ALLOW_TEXTURE_ATTRIBUTES_READ);
+		appearance.setCapability(Appearance.ALLOW_TEXTURE_ATTRIBUTES_WRITE);
+		appearance.setCapability(Appearance.ALLOW_TEXTURE_READ);
+		appearance.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		// alpha
 		TransparencyAttributes ta = new TransparencyAttributes();
 		ta.setCapability(TransparencyAttributes.ALLOW_VALUE_READ);
@@ -47,14 +62,20 @@ public class Pj3dColor3D extends Pj3dToolbox
 		ta.setTransparency (alpha);
 		appearance.setTransparencyAttributes (ta);
 		
+		TextureAttributes tex = new TextureAttributes();
+		tex.setCapability(TextureAttributes.ALLOW_MODE_READ);
+		tex.setCapability(TextureAttributes.ALLOW_MODE_WRITE);
+		appearance.setTextureAttributes(tex);
+		
 		ColoringAttributes ca = new ColoringAttributes();
 		ca.setColor(diffuseColor);
-		
 		appearance.setColoringAttributes(ca);
+		
 		appearance.setMaterial(new Material(ambientColor, emissiveColor, diffuseColor, specularColor, shininess));
 		appearance.getMaterial().setCapability(Material.ALLOW_COMPONENT_READ);
 		appearance.getMaterial().setCapability(Material.ALLOW_COMPONENT_WRITE);
 		//appearance.setTexture(texture);
+		//appearance.setTextureAttributes(Texture.ALLOW_IMAGE_WRITE);
 
 		return appearance;
 	}
@@ -352,19 +373,72 @@ public class Pj3dColor3D extends Pj3dToolbox
 	///
 	public void setAlpha(int s)
 	{
+		System.out.println(s);
 		alpha = ColorInt2Float(s);
+		System.out.println(appearance.getTransparencyAttributes());
 		appearance.getTransparencyAttributes().setTransparency(alpha);
 	}
 	
 	///
 	/// set methode fuer texture
 	///
-	/*
+	
 	// texture gibt es noch nicht, weil man parent ueberall uebergeben muesste. muss noch implementiert werden.
 	public void setTexture(String fileLocation)
 	{
+		
 		TextureLoader loader = new TextureLoader(fileLocation, new String("RGB"), parent);
 		Texture texture = loader.getTexture();
+		texture.setCapability(Texture.ALLOW_ENABLE_READ);
+		texture.setCapability(Texture.ALLOW_ENABLE_WRITE);
+		texture.setCapability(Texture.ALLOW_SIZE_READ);
+		texture.setEnable(true);
+		texture.setBoundaryModeS(Texture.WRAP);
+		texture.setBoundaryModeT(Texture.WRAP);
+
+		// hier kann spaeter die texture mode eingestellt werden.
+		/*
+		String textureMode = null;
+		
+		if (textureMode.equals("replace"))
+			appearance.getTextureAttributes().setTextureMode(TextureAttributes.REPLACE);
+		else if (textureMode.equals("blend"))
+			appearance.getTextureAttributes().setTextureMode(TextureAttributes.BLEND);
+		else if (textureMode.equals("combine"))
+			appearance.getTextureAttributes().setTextureMode(TextureAttributes.COMBINE);
+		else if (textureMode.equals("add"))
+			appearance.getTextureAttributes().setTextureMode(TextureAttributes.COMBINE_ADD);
+		else if (textureMode.equals("kill"))
+			appearance.setMaterial(null);
+		*/
+		
+		// im moment muss das material geloescht werden, damit die textur richtig angezeigt werden kann
+		appearance.setMaterial(null);
+		appearance.setTexture(texture);
+		/*
+		TextureAttributes myTA = new TextureAttributes( );
+
+		Transform3D myTrans = new Transform3D( );
+		myTrans.rotZ( Math.PI/2.0 ); // 45 degrees
+		myTrans.set(4);
+		myTA.setTextureTransform( myTrans );
+		myTA.setTextureMode(TextureAttributes.REPLACE);
+		appearance.setTextureAttributes( myTA );
+
+		System.out.println(texture.getHeight());
+		System.out.println(texture.getEnable());
+		*/
+		/*
+		TextureLoader loader = new TextureLoader( fileLocation, new String("RGB"), parent );
+		ImageComponent2D image = loader.getImage( );
+		Texture2D tex = new Texture2D( );
+		tex.setCapability(Texture2D.ALLOW_IMAGE_WRITE);
+		tex.setImage(0, image );
+		tex.setEnable( true );
+		tex.setBoundaryModeS( Texture.WRAP );
+		tex.setBoundaryModeT( Texture.WRAP );
+		appearance.setTexture( tex );
+		*/
 	}
-	*/
+	
 }

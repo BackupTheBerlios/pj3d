@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 ///
 /// Enthält alle Unterobjekte die zum späteren Gebrauch in Processing benötigt werden.
@@ -48,6 +49,11 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	public int mouseY;
 	public boolean mousePressed;
 	public boolean mouseReleased;
+	
+	// picking tools
+	public ArrayList pickables = new ArrayList();
+	public BranchGroup pickedObject = null;
+	public boolean objPicked;
 	
 	///
 	/// Standart Konstruktor.
@@ -96,8 +102,8 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    // default colors
 	    backgroundColor = new Color3f(0f, 0f, 0f);
 	    ambientColor = new Color3f(0.2f, 0.2f, 0.2f);
-	    diffuseColor = new Color3f(1.0f, 1.0f, 1.0f);
-	    emissiveColor = new Color3f(0.0f, 0.0f, 0.0f);
+	    diffuseColor = new Color3f(0.8f, 0.8f, 0.8f);
+	    emissiveColor = new Color3f(0.5f, 0.5f, 0.5f);
 	    specularColor = new Color3f(1.0f, 1.0f, 1.0f);
 	    textColor = new Color3f(0.5f, 0.5f, 0.5f);
 	    shininess = DEFAULTCOLOR;
@@ -112,6 +118,9 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
 	    
 	    // get the canvas3d to add the mouse and keylisteners
 	    canvas = mb.getMBCanvas3D();
+	    canvas.addKeyListener(this);
+	    canvas.addMouseListener(this);
+	    canvas.addMouseMotionListener(this);
 	    f.add( "Center", canvas );
 	    
 	    f.show( );
@@ -264,18 +273,23 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	mouseReleased = false;
     	mouseX = m.getX();
     	mouseY = m.getY();
+    	pickObject(mouseX, mouseY);
     }
     
     public void mouseExited (MouseEvent m) { }
     
     public void mouseEntered (MouseEvent m) { }
     
-    public void mouseClicked (MouseEvent m) { }
+    public void mouseClicked (MouseEvent m) {
+    	//System.out.println("mouseClicked..");	
+    }
     
     public void mouseReleased (MouseEvent m)
     {
     	mousePressed = false;
     	mouseReleased = true;
+    	objPicked = false;
+    	//System.out.println("mouseReleased..");
     }
     
     // mousemotionlistener
@@ -289,5 +303,49 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     {
     	mouseX = n.getX();
     	mouseY = n.getY();
+    }
+    
+    public void pickObject(int mouseX, int mouseY)
+    {
+    	try
+		{
+	    	PickRay pickRay;                        
+	
+	    	Point3d mousePoint = new Point3d();
+	    	Point3d eyePoint = new Point3d();
+	
+	    	canvas.getPixelLocationInImagePlate(mouseX, mouseY, mousePoint);
+	    	canvas.getCenterEyeInImagePlate(eyePoint);
+	
+	    	Transform3D vt = new Transform3D();
+	    	canvas.getImagePlateToVworld(vt);
+	
+	    	vt.transform(mousePoint);
+	    	vt.transform(eyePoint);
+	
+	    	Vector3d rayVector;
+	
+	    	rayVector = new Vector3d();
+	    	rayVector.sub(mousePoint,eyePoint);
+	    	rayVector.normalize();
+	
+	    	pickRay = new PickRay(mousePoint,rayVector);
+	
+	    	SceneGraphPath sceneGraphPath = getMBLocale().pickClosest(pickRay);
+	
+	    	pickedObject = (BranchGroup)sceneGraphPath.getNode(0);
+	    	objPicked = true;
+		}
+    	catch (Exception e)
+		{
+    		pickedObject = null;
+    		objPicked = false;
+		}
+    }
+    
+    public Pj3dPickable getPickedObj()
+    {
+    	Pj3dPickable picked = new Pj3dPickable(this, pickedObject);
+    	return picked;
     }
 }

@@ -11,8 +11,8 @@ public class Pj3dObj extends Pj3dToolbox
 	private BranchGroup primitiveBranch;
 	private Pj3dToolbox ptools = new Pj3dToolbox();
 	private float xdim, ydim, zdim;
-	public Pj3dTransform transform = new Pj3dTransform();
-	public Pj3dColor3D color = new Pj3dColor3D();
+	public Pj3dTransform transform;
+	public Pj3dShader shader;
 	public String file;
 	
 	///
@@ -21,27 +21,12 @@ public class Pj3dObj extends Pj3dToolbox
 	public Pj3dObj(Pj3d parent, String fileLocation)
 	{
 		this.parent = parent;
+		this.transform = new Pj3dTransform();
+		this.shader = new Pj3dShader(parent);
 		this.file = fileLocation;
 		this.InitPrimitive(file);
 	}
 	
-	
-	private void InitPrimitive(float xdim, float ydim, float zdim)
-	{
-		primitiveBranch = new BranchGroup();
-		transform.transform3D = new Transform3D();
-		transform.transformVector = new Vector3f(0f, 0f, 0f);
-		transform.transform3D.set(transform.transformVector);
-		transform.transformgroup = new TransformGroup(transform.transform3D);
-		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_WRITE );
-		transform.transformgroup.setCapability( TransformGroup.ALLOW_TRANSFORM_READ );
-		
-		color.appearance = color.CreateAppearance(parent.ambientColor, parent.diffuseColor, parent.emissiveColor, parent.specularColor, parent.shininess, parent.alpha);
-		Box box = new Box(xdim, ydim, zdim, color.appearance);
-		transform.transformgroup.addChild( box );
-		primitiveBranch.addChild(transform.transformgroup);
-		parent.AddModel(primitiveBranch);
-	}
 	
 	public void InitPrimitive(String file)
 	{
