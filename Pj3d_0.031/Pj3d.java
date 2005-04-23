@@ -339,7 +339,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	mouseX = m.getX();
     	mouseY = m.getY();
     	pickObject(mouseX, mouseY, m);
-    	//System.out.println("mousePressed");
+    	//System.out.println("mousePressed "+mousePressed);
     }
     
     ///
@@ -368,7 +368,7 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
     	mousePressed = false;
     	mouseReleased = true;
     	picked = false;
-    	//System.out.println("mouseReleased..");
+    	//System.out.println("mouseReleased.."+mousePressed);
     }
     
     ///
@@ -429,5 +429,10 @@ public class Pj3d extends Applet implements KeyListener, MouseListener, MouseMot
                System.out.println("null");
             }
          } 
+    }
+    
+    public Pj3dPickable getPickedObject()
+    {
+    	return pickedObject;
     }
 }

@@ -2,7 +2,7 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 
 ///
-/// Enthält alle nötigen Methoden um eine Kamera zu erzeugen und zu bewegen
+/// Enthï¿½lt alle nï¿½tigen Methoden um eine Kamera zu erzeugen und zu bewegen
 ///
 public class Pj3dCamera
 {
@@ -27,7 +27,7 @@ public class Pj3dCamera
 	}
 	
 	///
-	/// Für view.setBackClipDistance und view.setFieldOfView sind default Werte vergeben.
+	/// Fï¿½r view.setBackClipDistance und view.setFieldOfView sind default Werte vergeben.
 	/// Kann man noch set Methoden schreiben
 	///
 	private void InitCamera()
@@ -87,5 +87,14 @@ public class Pj3dCamera
     public void setFov(float fov)
     {
     	view.setFieldOfView(fov);
+    }
+    
+    public void lookAt(float x, float y, float z)
+    {
+    	float camX = transform.transformVector.x;
+    	float camY = transform.transformVector.y;
+    	float camZ = transform.transformVector.z;
+    	
+    	transform.transform3D.lookAt(new Point3d(camX, camY, camZ), new Point3d(x, y, z), new Vector3d(0d, 1d, 0d));
     }
 }
